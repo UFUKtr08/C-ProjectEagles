@@ -1,5 +1,5 @@
-#include "../include/ComplexDevices.h"
-#include "../include/Logger.h"
+#include "ComplexDevices.h"
+#include "Logger.h"
 #include <iostream>
 #include <sstream> // String dönüşümleri için
 
