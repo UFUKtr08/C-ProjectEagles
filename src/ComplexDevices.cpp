@@ -47,7 +47,6 @@ void Stove::onGasDetected() {
     for(size_t i=0; i<burners.size(); i++) burners[i]->setFire(false);
 }
 void Stove::operate() {
-    // Manuel menü (Eski usül, şimdilik kalabilir)
     cout << ">> Use 'Simulations' menu for advanced control." << endl;
 }
 
@@ -87,6 +86,11 @@ void SmartFaucet::checkFloodRisk() {
     }
 }
 
+// --- EKSİK OLAN KISIM: OPERATE ---
+void SmartFaucet::operate() {
+    cout << ">> Use 'Simulations' menu for advanced control." << endl;
+}
+
 // --- SMART FAUCET OTO-MENÜ ---
 vector<string> SmartFaucet::getActions() {
     vector<string> list;
@@ -124,6 +128,11 @@ void SmartFan::updateTimer() {
             Logger::getInstance()->log(name + " Auto-Stopped (Timer finished).");
         }
     }
+}
+
+// --- EKSİK OLAN KISIM: OPERATE ---
+void SmartFan::operate() {
+    cout << ">> Use 'Simulations' menu for advanced control." << endl;
 }
 
 // --- SMART FAN OTO-MENÜ ---

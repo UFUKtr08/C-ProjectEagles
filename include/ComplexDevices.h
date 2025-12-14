@@ -15,7 +15,6 @@ public:
   Burner(int i) : id(i), isOn(false) {}
   void setFire(bool status);
   bool getStatus() const { return isOn; }
-  
 };
 
 // --- STOVE CLASS (Ocak) ---
@@ -32,8 +31,11 @@ public:
   void controlBurner(int index, bool status);
   void onGasDetected();
   void operate();
-  // EKSİK OLAN BUYDU:
   std::string getType() const { return "Stove"; }
+
+  // --- EKSİK OLAN TANIMLAR EKLENDİ ---
+  std::vector<std::string> getActions();
+  void performAction(std::string actionName);
 };
 
 // --- SMART FAUCET (Akıllı Musluk) ---
@@ -48,9 +50,11 @@ public:
   Device *clone() const;
   void checkFloodRisk();
   void operate();
-
-  // EKSİK OLAN BUYDU:
   std::string getType() const { return "SmartFaucet"; }
+
+  // --- EKSİK OLAN TANIMLAR EKLENDİ ---
+  std::vector<std::string> getActions();
+  void performAction(std::string actionName);
 };
 
 // --- SMART FAN (Akıllı Fan) ---
@@ -66,9 +70,9 @@ public:
   void onLightStatusChanged(bool isLightOn);
   void updateTimer();
   void operate();
-
-  // EKSİK OLAN BUYDU:
   std::string getType() const { return "SmartFan"; }
+
+  // --- EKSİK OLAN TANIMLAR EKLENDİ ---
   std::vector<std::string> getActions();
   void performAction(std::string actionName);
 };
