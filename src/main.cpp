@@ -9,15 +9,13 @@
 #include "../include/Logger.h"
 #include "../include/MainMenu.h"
 #include "../include/ModeManager.h"
-#include "../include/Modes.h" // PartyMode, CinemaMode vb. icin
+#include "../include/Modes.h"
 #include "../include/SecuritySystem.h"
 
 using namespace std;
 
 int main() {
-  // 1. SISTEM BASLATMA
-  Logger::getInstance()->log("--- SYSTEM BOOT SEQUENCE INITIATED ---",
-                             "SYSTEM");
+  Logger::getInstance()->log("--- SYSTEM BOOT SEQUENCE INITIATED ---", "SYSTEM");
 
   MainMenu menu;
   InputHandler input;
@@ -25,154 +23,127 @@ int main() {
   ModeManager modeMgr;
   SecuritySystem secSystem;
 
-  // Alarm Kurulumu
   Alarm *mainAlarm = new Alarm(999, "Master Alarm");
-  mainAlarm->togglePower(); // Alarmi 'ARMED' yap
+  mainAlarm->togglePower(); 
   secSystem.setAlarm(mainAlarm);
 
   menu.displayWelcome();
   input.waitPressEnter();
 
-  // Varsayılan Cihazları Ekle
+  // --- VARSAYILAN CİHAZLAR (KORUNDU) ---
   Logger::getInstance()->log("Loading default devices...", "SYSTEM");
   deviceMgr.addDevice("Light", "Living Room Light");
   deviceMgr.addDevice("TV", "Smart TV");
   deviceMgr.addDevice("Curtain", "Balcony Curtain");
-  deviceMgr.addDevice("Light", "Toilet Light"); // <-- Fan bunu dinleyecek
-  deviceMgr.addDevice("SmartFan", "Bathroom Fan");
+  deviceMgr.addDevice("Light", "Toilet Light");      // Fan bunu dinleyecek
+  deviceMgr.addDevice("SmartFan", "Bathroom Fan");   // Otomatik fan
+  
+  // Test etmen için bir de "Yetenekli" cihaz ekleyelim:
+  deviceMgr.addDevice("Stove", "Kitchen Stove");     // Gaz kaçağı testi için
 
   bool isRunning = true;
   while (isRunning) {
     menu.displayOptions();
+    // Ekstra dinamik seçenekleri elle gösterelim (Menü classını değiştirmeden)
+    cout << "[11] Wait / Pass Time (Trigger Automations)" << endl;
 
-    int choice = input.getIntInput(1, 10, "\n>> Select Option: ");
-
-    // Not: DeviceManager.h icine getDevicesRef() ekledigini varsayiyoruz.
-    // Eger hata verirse include/DeviceManager.h'a sunu ekle:
-    // std::vector<Device*>& getDevicesRef() { return devices; }
+    int choice = input.getIntInput(1, 11, "\n>> Select Option: ");
     vector<Device *> &currentDevices = deviceMgr.getDevicesRef();
 
     switch (choice) {
-    case 1: // Get Home Status
-      deviceMgr.listDevices();
-      input.waitPressEnter();
-      break;
+    case 1: deviceMgr.listDevices(); input.waitPressEnter(); break;
 
-      case 2: // Add Device
-      { 
+    case 2: // TAM OTOMATİK CİHAZ EKLEME
+    { 
         cout << "\n--- Supported Devices ---" << endl;
+        vector<string> types = DeviceFactory::getAvailableTypes();
+        for(size_t i=0; i<types.size(); i++) cout << "- " << types[i] << endl;
         
-        // Factory'den listeyi çekiyoruz
-        vector<string> availableTypes = DeviceFactory::getAvailableTypes();
-        
-        // Listeyi ekrana basıyoruz
-        for (size_t i = 0; i < availableTypes.size(); ++i) {
-            cout << "- " << availableTypes[i] << endl;
-        }
-        cout << "-------------------------" << endl;
-  
-        string type = input.getStringInput("Enter Device Type: ");
-        string name = input.getStringInput("Enter Device Name: ");
-        
-        deviceMgr.addDevice(type, name);
+        string t = input.getStringInput("Type: ");
+        string n = input.getStringInput("Name: ");
+        deviceMgr.addDevice(t, n);
         input.waitPressEnter();
         break;
-      }
+    }
 
-    case 3: // Remove Device
+    case 3: 
+        deviceMgr.removeDevice(input.getIntInput(0, 1000, "Device ID: ")); 
+        input.waitPressEnter(); break;
+
+    case 4: // POWER ON
     {
-      int id = input.getIntInput(0, 1000, "Enter Device ID to remove: ");
-      deviceMgr.removeDevice(id);
-      input.waitPressEnter();
-      break;
+        int id = input.getIntInput(0, 1000, "ID: ");
+        Device* d = deviceMgr.getDevice(id);
+        if(d && !d->getPowerStatus()) {
+            d->togglePower();
+            // Otomasyon (Tuvalet ışığı kontrolü)
+            if(d->getType() == "Light") deviceMgr.notifyLightSwitch(true, d->getName());
+        } else cout << "!! Error/Already ON" << endl;
+        input.waitPressEnter(); break;
     }
 
-    case 4: // Power ON
+    case 5: // POWER OFF
     {
-      int id = input.getIntInput(0, 1000, "Enter Device ID to turn ON: ");
-      Device *d = deviceMgr.getDevice(id);
-      if (d && !d->getPowerStatus())
-        d->togglePower();
-      else
-        cout << "!! Device not found or already ON." << endl;
-      input.waitPressEnter();
-      break;
+        int id = input.getIntInput(0, 1000, "ID: ");
+        Device* d = deviceMgr.getDevice(id);
+        if(d && d->getPowerStatus()) {
+            d->togglePower();
+            // Otomasyon (Tuvalet ışığı kontrolü)
+            if(d->getType() == "Light") deviceMgr.notifyLightSwitch(false, d->getName());
+        } else cout << "!! Error/Already OFF" << endl;
+        input.waitPressEnter(); break;
     }
 
-    case 5: // Power OFF
+    case 6: // MODLAR
     {
-      int id = input.getIntInput(0, 1000, "Enter Device ID to turn OFF: ");
-      Device *d = deviceMgr.getDevice(id);
-      if (d && d->getPowerStatus())
-        d->togglePower();
-      else
-        cout << "!! Device not found or already OFF." << endl;
-      input.waitPressEnter();
-      break;
+        cout << "[1] Normal [2] Party [3] Cinema" << endl;
+        int m = input.getIntInput(1, 3, "Mode: ");
+        if(m==1) modeMgr.setMode(new NormalMode(), currentDevices);
+        else if(m==2) modeMgr.setMode(new PartyMode(), currentDevices);
+        else if(m==3) modeMgr.setMode(new CinemaMode(), currentDevices);
+        input.waitPressEnter(); break;
     }
 
-    case 6: // Change Mode
-    {       // <--- BURAYA DA EKLEDIK
-      cout << "\n[1] Normal Mode\n[2] Party Mode\n[3] Cinema Mode" << endl;
-      int modeChoice = input.getIntInput(1, 3, "Select Mode: ");
+    case 7: modeMgr.restorePreviousState(currentDevices); input.waitPressEnter(); break;
 
-      IMode *newMode = NULL;
-      if (modeChoice == 1)
-        newMode = new NormalMode();
-      else if (modeChoice == 2)
-        newMode = new PartyMode();
-      else if (modeChoice == 3)
-        newMode = new CinemaMode();
+    case 8: // --- TAM OTOMATİK SİMÜLASYON MENÜSÜ ---
+    {
+        cout << "\n--- AVAILABLE ACTIONS ---" << endl;
+        
+        // Bu liste dinamik oluşturulur: <Cihaz*, AksiyonAdı>
+        vector< pair<Device*, string> > actionList;
+        int index = 1;
 
-      if (newMode) {
-        modeMgr.setMode(newMode, currentDevices);
-      }
-      input.waitPressEnter();
-      break;
+        for(size_t i=0; i<currentDevices.size(); i++) {
+            // Cihaza soruyoruz: "Neler yapabilirsin?"
+            vector<string> acts = currentDevices[i]->getActions();
+            for(size_t j=0; j<acts.size(); j++) {
+                cout << "[" << index << "] " << acts[j] << " (" << currentDevices[i]->getName() << ")" << endl;
+                // Seçeneği kaydet (C++98 uyumlu pair)
+                actionList.push_back(make_pair(currentDevices[i], acts[j]));
+                index++;
+            }
+        }
+
+        if(actionList.empty()) {
+            cout << ">> No actions available on current devices." << endl;
+        } else {
+            int sel = input.getIntInput(1, index-1, "Select Action: ");
+            // Seçilen cihazın ilgili fonksiyonunu çalıştır
+            actionList[sel-1].first->performAction(actionList[sel-1].second);
+        }
+        input.waitPressEnter(); break;
     }
 
-    case 7: // Undo / Previous State
-      modeMgr.restorePreviousState(currentDevices);
-      input.waitPressEnter();
-      break;
-
-    case 8: // Manual / Sensor Test
-    {       // <--- HATA VEREN YER BURASIYDI, PARANTEZLERI EKLEDIK
-      cout << "\n--- SENSOR SIMULATION ---" << endl;
-      cout << "[1] Trigger Motion (Camera)" << endl;
-      cout << "[2] Trigger Smoke (Smoke Detector)" << endl;
-      cout << "[3] Trigger Flood/Leak (Smart Faucet)"endl;
-      cout << "[4] Trigger Gas Leak (Stove)" << endl; // <--- YENİ EKLENEN
-
-      int simChoice = input.getIntInput(1, 3, "Select Simulation: ");
-
-      if (simChoice == 1) {
-        secSystem.notifyBreach("Hallway Camera", "MOTION");
-      } else if (simChoice == 2) {
-        secSystem.notifyBreach("Kitchen Detector", "FIRE");
-      } else if (simChoice == 3) {
-        // YENİ: Su taşma senaryosu
-        secSystem.notifyBreach("Bathroom Faucet", "FLOOD");
-      }
-
-      input.waitPressEnter();
-      break;
-    }
-
-    case 9: // About
-      cout << "\nMy Sweet Home (MSH) v3.0" << endl;
-      cout << "Developers: Eagles & Gemini" << endl;
-      input.waitPressEnter();
-      break;
-
-    case 10: // Shutdown
-      Logger::getInstance()->log("System Shutdown Requested.", "SYSTEM");
-      isRunning = false;
-      cout << "Goodbye!" << endl;
-      break;
+    case 9: cout << "MSH v3.0" << endl; input.waitPressEnter(); break;
+    case 10: isRunning = false; cout << "Bye!" << endl; break;
+    
+    case 11: // WAIT / PASS TIME
+        deviceMgr.updateSystemLoops();
+        input.waitPressEnter();
+        break;
     }
   }
-
   delete mainAlarm;
   return 0;
 }
