@@ -15,6 +15,7 @@ public:
   Burner(int i) : id(i), isOn(false) {}
   void setFire(bool status);
   bool getStatus() const { return isOn; }
+  
 };
 
 // --- STOVE CLASS (Ocak) ---
@@ -30,7 +31,7 @@ public:
   Device *clone() const;
   void controlBurner(int index, bool status);
   void onGasDetected();
-
+  void operate();
   // EKSİK OLAN BUYDU:
   std::string getType() const { return "Stove"; }
 };

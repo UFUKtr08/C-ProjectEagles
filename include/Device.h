@@ -18,7 +18,9 @@ public:
   // Sadece tanımlar (Implementation .cpp dosyasında)
   Device(int id, string n);
   virtual ~Device();
-
+  virtual void operate() {
+    cout << ">> No manual configuration available for " << getName() << "." << endl;
+}
   int getID() const;
   string getName() const;
   bool getPowerStatus() const;

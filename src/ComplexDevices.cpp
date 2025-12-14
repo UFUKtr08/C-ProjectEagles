@@ -62,6 +62,35 @@ void Stove::controlBurner(int index, bool status) {
         Logger::getInstance()->log(ss.str());
     }
 }
+void Stove::operate() {
+    cout << "\n--- " << getName() << " CONTROL PANEL ---" << endl;
+
+    if (!isPowered) {
+        cout << "(!) Warning: You must turn ON the device to configure it." << endl;
+        return;
+    }
+
+    int burnerIndex;
+    cout << "Select Burner (1-4): ";
+    
+    // Hatalı giriş kontrolü (sayı girilmezse döngüye girmesin)
+    if (!(cin >> burnerIndex)) {
+        cin.clear(); 
+        cin.ignore(10000, '\n'); 
+        cout << ">> Invalid input!" << endl;
+        return;
+    }
+
+    int status;
+    cout << "Action (1: Ignite, 0: Extinguish): ";
+    cin >> status;
+
+    // Asıl işi yapan fonksiyonu çağırıyoruz
+    controlBurner(burnerIndex - 1, (status == 1));
+    
+    // Buffer temizliği
+    cin.ignore(10000, '\n'); 
+}
 
 // LLR-050: Gaz algılandığında acil durum!
 void Stove::onGasDetected() {

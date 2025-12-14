@@ -56,15 +56,26 @@ int main() {
       input.waitPressEnter();
       break;
 
-    case 2: // Add Device
-    { // <--- SÜSLÜ PARANTEZ ŞART (Değişken tanımladığımız için)
-      string type =
-          input.getStringInput("Enter Device Type (Light/TV/Curtain): ");
-      string name = input.getStringInput("Enter Device Name: ");
-      deviceMgr.addDevice(type, name);
-      input.waitPressEnter();
-      break;
-    }
+      case 2: // Add Device
+      { 
+        cout << "\n--- Supported Devices ---" << endl;
+        
+        // Factory'den listeyi çekiyoruz
+        vector<string> availableTypes = DeviceFactory::getAvailableTypes();
+        
+        // Listeyi ekrana basıyoruz
+        for (size_t i = 0; i < availableTypes.size(); ++i) {
+            cout << "- " << availableTypes[i] << endl;
+        }
+        cout << "-------------------------" << endl;
+  
+        string type = input.getStringInput("Enter Device Type: ");
+        string name = input.getStringInput("Enter Device Name: ");
+        
+        deviceMgr.addDevice(type, name);
+        input.waitPressEnter();
+        break;
+      }
 
     case 3: // Remove Device
     {
@@ -128,7 +139,8 @@ int main() {
       cout << "\n--- SENSOR SIMULATION ---" << endl;
       cout << "[1] Trigger Motion (Camera)" << endl;
       cout << "[2] Trigger Smoke (Smoke Detector)" << endl;
-      cout << "[3] Trigger Flood/Leak (Smart Faucet)"
+      cout << "[3] Trigger Flood/Leak (Smart Faucet)"endl;
+      cout << "[4] Trigger Gas Leak (Stove)" << endl;
            << endl; // <--- YENİ EKLENEN
 
       int simChoice = input.getIntInput(1, 3, "Select Simulation: ");
