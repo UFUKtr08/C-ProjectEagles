@@ -21,6 +21,8 @@ public:
 
     void detectMotion(SecuritySystem* sys);
     std::string getType() const { return "Camera"; }
+    std::vector<std::string> getActions();
+    void performAction(std::string actionName);
 };
 
 #endif

@@ -69,6 +69,8 @@ public:
 
   // EKSİK OLAN BUYDU:
   std::string getType() const { return "SmartFan"; }
+  std::vector<std::string> getActions();
+  void performAction(std::string actionName);
 };
 
 #endif
