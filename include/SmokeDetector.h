@@ -3,7 +3,7 @@
 
 #include "Device.h"
 #include <iostream>
-
+#include <vector>
 class SecuritySystem;
 
 class SmokeDetector : public Device {

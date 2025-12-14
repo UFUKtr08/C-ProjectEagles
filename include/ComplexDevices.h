@@ -47,6 +47,7 @@ public:
   void togglePower();
   Device *clone() const;
   void checkFloodRisk();
+  void operate();
 
   // EKSİK OLAN BUYDU:
   std::string getType() const { return "SmartFaucet"; }
@@ -64,6 +65,7 @@ public:
   Device *clone() const;
   void onLightStatusChanged(bool isLightOn);
   void updateTimer();
+  void operate();
 
   // EKSİK OLAN BUYDU:
   std::string getType() const { return "SmartFan"; }

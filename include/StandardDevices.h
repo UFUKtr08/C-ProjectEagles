@@ -2,18 +2,21 @@
 #define STANDARD_DEVICES_H
 
 #include "Device.h"
+#include <vector> // vector kütüphanesi eklendi
 
 // --- LIGHT CLASS ---
 class Light : public Device {
 public:
-  // 1. Parametresiz Kurucu (Factory icin)
   Light() : Device(0, "Generic Light") {}
-  // 2. Parametreli Kurucu (Main/Test icin)
   Light(int id, string n) : Device(id, n) {}
 
   void togglePower();
   Device *clone() const;
   string getType() const { return "Light"; }
+
+  // Oto-Menü Entegrasyonu
+  vector<string> getActions();
+  void performAction(string actionName);
 };
 
 // --- TV CLASS ---
@@ -25,6 +28,10 @@ public:
   void togglePower();
   Device *clone() const;
   string getType() const { return "TV"; }
+
+  // Oto-Menü Entegrasyonu
+  vector<string> getActions();
+  void performAction(string actionName);
 };
 
 // --- CURTAIN CLASS ---
@@ -36,6 +43,10 @@ public:
   void togglePower();
   Device *clone() const;
   string getType() const { return "Curtain"; }
+
+  // Oto-Menü Entegrasyonu
+  vector<string> getActions();
+  void performAction(string actionName);
 };
 
 #endif
