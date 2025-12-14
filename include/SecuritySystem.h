@@ -24,6 +24,7 @@ public:
 
     // CHAIN OF RESPONSIBILITY: Sırayla işlemleri yapar
     void triggerSequence();
+    void checkNoiseLevel(int db);
 };
 
 #endif

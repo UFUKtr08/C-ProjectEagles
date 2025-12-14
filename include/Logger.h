@@ -1,68 +1,39 @@
-#ifndef LOGGER_H
-#define LOGGER_H
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-#include <string>
-#include <fstream>
+#include "../include/Logger.h"
 #include <iostream>
 
-using namespace std;
+Logger* Logger::instance = NULL;
 
-// Log Seviyeleri (Standartlaştırma)
-// C++98'de static const string headerda tanımlanırken dikkatli olunmalı,
-// ama pratiklik için bu şekilde bırakıyorum.
-static const string LOG_INFO = "INFO";
-static const string LOG_WARN = "WARNING";
-static const string LOG_ERR  = "ERROR";
-static const string LOG_DEBUG = "DEBUG";
+Logger::Logger() {
+    logFile.open("MSH_Log.txt", ios::app);
+    if (logFile.is_open()) {
+        // Log dosyasina baslangic notu
+        // cout << "Log System Init" << endl; 
+    }
+}
 
-=======
-=======
->>>>>>> origin/module5_ridvanserbes
-#include <string>
-#include <fstream>
-#include <iostream>
-using namespace std;
-<<<<<<< HEAD
->>>>>>> 8d91ab7937d6b95c67b99dbbb7553c5d399ae840
-=======
->>>>>>> origin/module5_ridvanserbes
-class Logger {
-private:
-    static Logger* instance;
-    ofstream logFile;
-<<<<<<< HEAD
-<<<<<<< HEAD
-    
-    // Private Constructor (Singleton)
-    Logger();
+Logger::~Logger() {
+    if (logFile.is_open()) {
+        logFile.close();
+    }
+}
 
-public:
-    ~Logger();
-    static Logger* getInstance();
+Logger* Logger::getInstance() {
+    if (!instance) {
+        instance = new Logger();
+    }
+    return instance;
+}
 
-    // 1. FATİH'İN ORİJİNAL FONKSİYONU (Aynen Kalıyor)
-    // Eski kodlar çalışmaya devam etsin diye.
-    void log(const string& message);
+// Overloading destegi (String ve Level)
+void Logger::log(const string& message, const string& level) {
+    if (logFile.is_open()) {
+        logFile << "[" << level << "] " << message << endl;
+        // Konsola da basmak istersen:
+        // cout << "[LOG-" << level << "] " << message << endl;
+    }
+}
 
-    // 2. YENİ EKLENEN FONKSİYON (Gelişmiş)
-    // Seviye belirterek log atmak isteyenler bunu kullanacak.
-    // Örn: logger->log("Hata oluştu", LOG_ERR);
-    void log(const string& message, const string& level);
-};
-
-=======
-=======
->>>>>>> origin/module5_ridvanserbes
-    Logger();
-public:
-    ~Logger();
-    static Logger* getInstance();
-    void log(const string& message);
-};
-<<<<<<< HEAD
->>>>>>> 8d91ab7937d6b95c67b99dbbb7553c5d399ae840
-=======
->>>>>>> origin/module5_ridvanserbes
-#endif
+// Diger siniflarin kullandigi tek parametreli versiyon
+void Logger::log(const string& message) {
+    log(message, "INFO");
+}
