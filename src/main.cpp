@@ -38,6 +38,8 @@ int main() {
   deviceMgr.addDevice("Light", "Living Room Light");
   deviceMgr.addDevice("TV", "Smart TV");
   deviceMgr.addDevice("Curtain", "Balcony Curtain");
+  deviceMgr.addDevice("Light", "Toilet Light"); // <-- Fan bunu dinleyecek
+  deviceMgr.addDevice("SmartFan", "Bathroom Fan");
 
   bool isRunning = true;
   while (isRunning) {
@@ -140,8 +142,7 @@ int main() {
       cout << "[1] Trigger Motion (Camera)" << endl;
       cout << "[2] Trigger Smoke (Smoke Detector)" << endl;
       cout << "[3] Trigger Flood/Leak (Smart Faucet)"endl;
-      cout << "[4] Trigger Gas Leak (Stove)" << endl;
-           << endl; // <--- YENİ EKLENEN
+      cout << "[4] Trigger Gas Leak (Stove)" << endl; // <--- YENİ EKLENEN
 
       int simChoice = input.getIntInput(1, 3, "Select Simulation: ");
 
@@ -159,8 +160,8 @@ int main() {
     }
 
     case 9: // About
-      cout << "\nMy Sweet Home (MSH) v1.0" << endl;
-      cout << "Developers: [Senin Adın] & Gemini" << endl;
+      cout << "\nMy Sweet Home (MSH) v3.0" << endl;
+      cout << "Developers: Eagles & Gemini" << endl;
       input.waitPressEnter();
       break;
 
