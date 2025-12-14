@@ -1,53 +1,38 @@
 #ifndef DEVICE_H
 #define DEVICE_H
 
-#include <string>
 #include <iostream>
-#include "Logger.h" // Aynı klasörde oldukları için direkt ismiyle çağırır
+#include <string>
 
 using namespace std;
 
+// Abstract Base Class
 class Device {
 protected:
-    int deviceID;
-    string name;
-    bool isPowered;
-    bool isBroken;
-
-    // --- SENİN EKLEMEN (MERGE) 1: DEFAULT CONSTRUCTOR ---
-    // Factory Pattern (new Light()) parametresiz üretim yaptığı için bu ZORUNLU.
-    // Protected yaptık ki sadece alt sınıflar kullanabilsin.
-    Device() : deviceID(0), name("Unknown"), isPowered(false), isBroken(false) {}
+  int deviceID;
+  string name;
+  bool isPowered;
+  bool isBroken;
 
 public:
-    // --- ARKADAŞININ CONSTRUCTOR'I (DOKUNULMADI) ---
-    Device(int id, string n) : deviceID(id), name(n), isPowered(false), isBroken(false) {}
-    
-    virtual ~Device() {}
+  // Sadece tanımlar (Implementation .cpp dosyasında)
+  Device(int id, string n);
+  virtual ~Device();
 
-    // --- SENİN EKLEMEN (MERGE) 2: SETTERLAR ---
-    // DeviceManager nesneyi yarattıktan sonra ID ve İsim atamak zorunda.
-    void setID(int id) { deviceID = id; }
-    void setName(string n) { name = n; }
+  int getID() const;
+  string getName() const;
+  bool getPowerStatus() const;
+  bool getBrokenStatus() const;
+  void setBroken(bool status); // Setter
 
-    // --- ORTAK GETTERLAR (Arkadaşınınkiler + Inline Implementation) ---
-    // Linker hatası almamak için gövdelerini {} buraya yazdım.
-    int getID() const { return deviceID; }
-    string getName() const { return name; }
-    bool getPowerStatus() const { return isPowered; }
-    
-    // Arkadaşının eklediği özellikler
-    bool getBrokenStatus() const { return isBroken; }
-    void setBroken(bool status) { isBroken = status; }
+  // SetID ve SetName eklenmeli (DeviceManager kullaniyor)
+  void setID(int id) { deviceID = id; }
+  void setName(string n) { name = n; }
 
-    // --- ORTAK SANAL FONKSİYONLAR ---
-    // Prototype ve Polimorfizm için gerekli
-    virtual void togglePower() = 0;
-    virtual Device* clone() const = 0;
-
-    // --- SENİN EKLEMEN 3: TÜR BİLGİSİ ---
-    // Listeleme yaparken "Light", "TV" yazdırmak için gerekli
-    virtual string getType() const = 0;
+  // Pure Virtual Functions
+  virtual void togglePower() = 0;
+  virtual Device *clone() const = 0;
+  virtual string getType() const = 0;
 };
 
 #endif

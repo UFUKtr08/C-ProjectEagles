@@ -1,141 +1,165 @@
 #include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
 
-// Header Dosyalari (Dizin yapina gore "../include/" kullaniyoruz)
-#include "../include/Logger.h"
-#include "../include/SecuritySystem.h"
+// Header Dosyalari
 #include "../include/Alarm.h"
-#include "../include/StandardDevices.h" // Light, TV, Curtain
-#include "../include/SmokeDetector.h"
-#include "../include/SoundSensor.h"
-#include "../include/ComplexDevices.h" // Stove, SmartFan vb.
-#include "../include/Modes.h"          // NormalMode, PartyMode, CinemaMode
+#include "../include/DeviceManager.h"
+#include "../include/InputHandler.h"
+#include "../include/Logger.h"
+#include "../include/MainMenu.h"
+#include "../include/ModeManager.h"
+#include "../include/Modes.h" // PartyMode, CinemaMode vb. icin
+#include "../include/SecuritySystem.h"
 
 using namespace std;
 
-// Konsol ciktisini duzenlemek icin yardimci fonksiyon
-void printHeader(string title) {
-    cout << "\n========================================" << endl;
-    cout << " TEST: " << title << endl;
-    cout << "========================================" << endl;
-}
-
 int main() {
-    // 1. LOGGER BASLATMA
-    Logger::getInstance()->log("--- MASTER TEST STARTED ---", "SYSTEM");
+  // 1. SISTEM BASLATMA
+  Logger::getInstance()->log("--- SYSTEM BOOT SEQUENCE INITIATED ---",
+                             "SYSTEM");
 
-    // 2. GUVENLIK SISTEMI VE ALARM KURULUMU
-    SecuritySystem* secSystem = new SecuritySystem();
-    
-    // Artik main icinde "class Siren" tanimlamiyoruz. Gercek Alarm sinifini kullaniyoruz.
-    Alarm* masterAlarm = new Alarm(999, "Ana Ev Sireni");
-    
-    // Alarmi "ARMED" (Acik) konuma getiriyoruz ki tetiklenince calsin
-    if (!masterAlarm->getPowerStatus()) {
-        masterAlarm->togglePower(); 
+  MainMenu menu;
+  InputHandler input;
+  DeviceManager deviceMgr;
+  ModeManager modeMgr;
+  SecuritySystem secSystem;
+
+  // Alarm Kurulumu
+  Alarm *mainAlarm = new Alarm(999, "Master Alarm");
+  mainAlarm->togglePower(); // Alarmi 'ARMED' yap
+  secSystem.setAlarm(mainAlarm);
+
+  menu.displayWelcome();
+  input.waitPressEnter();
+
+  // Varsayılan Cihazları Ekle
+  Logger::getInstance()->log("Loading default devices...", "SYSTEM");
+  deviceMgr.addDevice("Light", "Living Room Light");
+  deviceMgr.addDevice("TV", "Smart TV");
+  deviceMgr.addDevice("Curtain", "Balcony Curtain");
+
+  bool isRunning = true;
+  while (isRunning) {
+    menu.displayOptions();
+
+    int choice = input.getIntInput(1, 10, "\n>> Select Option: ");
+
+    // Not: DeviceManager.h icine getDevicesRef() ekledigini varsayiyoruz.
+    // Eger hata verirse include/DeviceManager.h'a sunu ekle:
+    // std::vector<Device*>& getDevicesRef() { return devices; }
+    vector<Device *> &currentDevices = deviceMgr.getDevicesRef();
+
+    switch (choice) {
+    case 1: // Get Home Status
+      deviceMgr.listDevices();
+      input.waitPressEnter();
+      break;
+
+    case 2: // Add Device
+    { // <--- SÜSLÜ PARANTEZ ŞART (Değişken tanımladığımız için)
+      string type =
+          input.getStringInput("Enter Device Type (Light/TV/Curtain): ");
+      string name = input.getStringInput("Enter Device Name: ");
+      deviceMgr.addDevice(type, name);
+      input.waitPressEnter();
+      break;
     }
-    
-    // Alarmi sisteme bagla
-    secSystem->setAlarm(masterAlarm);
 
-
-    // 3. CIHAZLARI OLUSTURMA (Manuel Envanter)
-    vector<Device*> devices;
-
-    // -- Standart Cihazlar --
-    Light* salonIsik = new Light(101, "Salon Isigi");
-    TV* salonTV = new TV(102, "Salon TV");
-    Curtain* yatakPerde = new Curtain(103, "Yatak Odasi Perdesi");
-
-    // -- Sensorler --
-    SmokeDetector* dumanSensoru = new SmokeDetector(201, "Mutfak Duman Detektoru");
-    SoundSensor* sesSensoru = new SoundSensor(202, "Koridor Ses Sensoru");
-
-    // -- Karmasik Cihazlar --
-    Stove* akilliOcak = new Stove(301, "Ankastre Ocak");
-    SmartFan* banyoFani = new SmartFan(302, "Banyo Havalandirma");
-
-    // Yonetim icin listeye ekle
-    devices.push_back(salonIsik);
-    devices.push_back(salonTV);
-    devices.push_back(yatakPerde);
-    devices.push_back(dumanSensoru);
-    devices.push_back(sesSensoru);
-    devices.push_back(akilliOcak);
-    devices.push_back(banyoFani);
-
-
-    // ================= TEST SENARYOLARI =================
-
-    // SENARYO 1: TEMEL KONTROL
-    printHeader("TEMEL CIHAZ KONTROLU");
-    salonIsik->togglePower();    // Isik ACILDI
-    yatakPerde->togglePower();   // Perde ACILDI
-    salonTV->togglePower();      // TV ACILDI (Sonra kapatalim)
-    salonTV->togglePower();      // TV KAPANDI
-
-
-    // SENARYO 2: KARMASIK CIHAZ (OCAK)
-    printHeader("KARMASIK CIHAZ (OCAK) TESTI");
-    akilliOcak->togglePower();          // Ana gaz vanasini ac
-    akilliOcak->controlBurner(0, true); // 1. gozu yak
-    akilliOcak->controlBurner(2, true); // 3. gozu yak
-    // Ocak acikken guvenlik testi (Gaz Kacagi)
-    cout << ">> SIMULASYON: Gaz kacagi algilandi..." << endl;
-    akilliOcak->onGasDetected();        // Otomatik kapanmali
-    
-
-    // SENARYO 3: MOD DEGISIMLERI (Design Pattern: State/Strategy)
-    printHeader("MOD TESTI: PARTY MODE");
-    IMode* partyMode = new PartyMode();
-    partyMode->execute(devices); // Isiklar, Ses ve varsa ilgili cihazlar acilmali
-    delete partyMode;
-
-    printHeader("MOD TESTI: CINEMA MODE");
-    IMode* cinemaMode = new CinemaMode();
-    cinemaMode->execute(devices); // Sadece TV acik, isiklar kapanmali
-    delete cinemaMode;
-
-
-    // SENARYO 4: GUVENLIK VE SENSORLER (Design Pattern: Observer/Mediator)
-    printHeader("GUVENLIK SISTEMI TESTI");
-    
-    // a) Yuksek Ses Testi
-    cout << ">> Ses olculuyor (40dB)..." << endl;
-    sesSensoru->measureLevel(40, secSystem); // Normal
-    cout << ">> Ses olculuyor (100dB)..." << endl;
-    sesSensoru->measureLevel(100, secSystem); // UYARI vermeli (Log kontrol et)
-
-    // b) Yangin Testi
-    cout << "\n>> SIMULASYON: Yangin basladi!" << endl;
-    dumanSensoru->detectSmoke(secSystem); 
-    // BEKLENEN: Alarm calacak, sistem polise haber verecek (konsol ciktisi)
-
-
-    // SENARYO 5: PROTOTYPE (CLONE)
-    printHeader("PROTOTYPE (CLONE) TESTI");
-    Device* kopyaIsik = salonIsik->clone(); // Var olan isigin kopyasi
-    cout << "Orijinal Isik ID: " << salonIsik->getID() << " | Isim: " << salonIsik->getName() << endl;
-    cout << "Kopya Isik ID:    " << kopyaIsik->getID() << " | Isim: " << kopyaIsik->getName() << endl;
-    delete kopyaIsik; // Kopyayi temizle
-
-
-    // ================= TEMIZLIK =================
-    printHeader("SISTEM KAPATILIYOR");
-    
-    // Cihazlari temizle
-    for (size_t i = 0; i < devices.size(); ++i) {
-        delete devices[i];
+    case 3: // Remove Device
+    {
+      int id = input.getIntInput(0, 1000, "Enter Device ID to remove: ");
+      deviceMgr.removeDevice(id);
+      input.waitPressEnter();
+      break;
     }
-    devices.clear();
 
-    // Sistem bilesenlerini temizle
-    delete masterAlarm; // Once alarmi sil
-    delete secSystem;   // Sonra sistemi sil
-    // Logger Singleton oldugu icin program bitisinde kendi static pointer'i kalir 
-    // veya Logger::~Logger() cagrilir.
+    case 4: // Power ON
+    {
+      int id = input.getIntInput(0, 1000, "Enter Device ID to turn ON: ");
+      Device *d = deviceMgr.getDevice(id);
+      if (d && !d->getPowerStatus())
+        d->togglePower();
+      else
+        cout << "!! Device not found or already ON." << endl;
+      input.waitPressEnter();
+      break;
+    }
 
-    cout << "Main program sonlandi." << endl;
-    return 0;
+    case 5: // Power OFF
+    {
+      int id = input.getIntInput(0, 1000, "Enter Device ID to turn OFF: ");
+      Device *d = deviceMgr.getDevice(id);
+      if (d && d->getPowerStatus())
+        d->togglePower();
+      else
+        cout << "!! Device not found or already OFF." << endl;
+      input.waitPressEnter();
+      break;
+    }
+
+    case 6: // Change Mode
+    {       // <--- BURAYA DA EKLEDIK
+      cout << "\n[1] Normal Mode\n[2] Party Mode\n[3] Cinema Mode" << endl;
+      int modeChoice = input.getIntInput(1, 3, "Select Mode: ");
+
+      IMode *newMode = NULL;
+      if (modeChoice == 1)
+        newMode = new NormalMode();
+      else if (modeChoice == 2)
+        newMode = new PartyMode();
+      else if (modeChoice == 3)
+        newMode = new CinemaMode();
+
+      if (newMode) {
+        modeMgr.setMode(newMode, currentDevices);
+      }
+      input.waitPressEnter();
+      break;
+    }
+
+    case 7: // Undo / Previous State
+      modeMgr.restorePreviousState(currentDevices);
+      input.waitPressEnter();
+      break;
+
+    case 8: // Manual / Sensor Test
+    {       // <--- HATA VEREN YER BURASIYDI, PARANTEZLERI EKLEDIK
+      cout << "\n--- SENSOR SIMULATION ---" << endl;
+      cout << "[1] Trigger Motion (Camera)" << endl;
+      cout << "[2] Trigger Smoke (Smoke Detector)" << endl;
+      cout << "[3] Trigger Flood/Leak (Smart Faucet)"
+           << endl; // <--- YENİ EKLENEN
+
+      int simChoice = input.getIntInput(1, 3, "Select Simulation: ");
+
+      if (simChoice == 1) {
+        secSystem.notifyBreach("Hallway Camera", "MOTION");
+      } else if (simChoice == 2) {
+        secSystem.notifyBreach("Kitchen Detector", "FIRE");
+      } else if (simChoice == 3) {
+        // YENİ: Su taşma senaryosu
+        secSystem.notifyBreach("Bathroom Faucet", "FLOOD");
+      }
+
+      input.waitPressEnter();
+      break;
+    }
+
+    case 9: // About
+      cout << "\nMy Sweet Home (MSH) v1.0" << endl;
+      cout << "Developers: [Senin Adın] & Gemini" << endl;
+      input.waitPressEnter();
+      break;
+
+    case 10: // Shutdown
+      Logger::getInstance()->log("System Shutdown Requested.", "SYSTEM");
+      isRunning = false;
+      cout << "Goodbye!" << endl;
+      break;
+    }
+  }
+
+  delete mainAlarm;
+  return 0;
 }

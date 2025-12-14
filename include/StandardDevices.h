@@ -6,25 +6,36 @@
 // --- LIGHT CLASS ---
 class Light : public Device {
 public:
-    void togglePower();
-    Device* clone() const; // Prototype Pattern Implementation
-    string getType() const { return "Light"; }
+  // 1. Parametresiz Kurucu (Factory icin)
+  Light() : Device(0, "Generic Light") {}
+  // 2. Parametreli Kurucu (Main/Test icin)
+  Light(int id, string n) : Device(id, n) {}
+
+  void togglePower();
+  Device *clone() const;
+  string getType() const { return "Light"; }
 };
 
 // --- TV CLASS ---
 class TV : public Device {
 public:
-    void togglePower();
-    Device* clone() const;
-    string getType() const { return "TV"; }
+  TV() : Device(0, "Generic TV") {}
+  TV(int id, string n) : Device(id, n) {}
+
+  void togglePower();
+  Device *clone() const;
+  string getType() const { return "TV"; }
 };
 
-// --- CURTAIN CLASS (Yeni eklenen özellik) ---
+// --- CURTAIN CLASS ---
 class Curtain : public Device {
 public:
-    void togglePower(); // Open/Close mantığı
-    Device* clone() const;
-    string getType() const { return "Curtain"; }
+  Curtain() : Device(0, "Generic Curtain") {}
+  Curtain(int id, string n) : Device(id, n) {}
+
+  void togglePower();
+  Device *clone() const;
+  string getType() const { return "Curtain"; }
 };
 
 #endif

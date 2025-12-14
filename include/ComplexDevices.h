@@ -2,80 +2,70 @@
 #define COMPLEX_DEVICES_H
 
 #include "Device.h"
+#include <string>
 #include <vector>
 
-// ==========================================
-// FEATURE 1: STOVE & BURNERS (Composite Pattern)
-// ==========================================
-
-// Yardımcı Sınıf (Parça)
+// --- BURNER CLASS (Ocak Gözü) ---
 class Burner {
 private:
-    int id;
-    bool isOn;
+  int id;
+  bool isOn;
+
 public:
-    Burner(int burnerID) : id(burnerID), isOn(false) {}
-    void setFire(bool status);
-    bool getStatus() const { return isOn; }
+  Burner(int i) : id(i), isOn(false) {}
+  void setFire(bool status);
+  bool getStatus() const { return isOn; }
 };
 
-// Ana Sınıf (Bütün)
+// --- STOVE CLASS (Ocak) ---
 class Stove : public Device {
 private:
-    std::vector<Burner*> burners; // Composition: Ocak brülörlerden oluşur
+  std::vector<Burner *> burners;
 
 public:
-    Stove(int id, std::string n);
-    ~Stove(); // Destructor önemli: Burner'ları temizlemeli
+  Stove(int id, std::string n);
+  ~Stove();
 
-    void togglePower(); // Tüm ocağı kapatır/açar
-    Device* clone() const; // Prototype Pattern
+  void togglePower();
+  Device *clone() const;
+  void controlBurner(int index, bool status);
+  void onGasDetected();
 
-    // Brülörleri tek tek kontrol etme (LLR-048)
-    void controlBurner(int index, bool status);
-
-    // Observer Pattern: Gaz Dedektörü tetiklerse burası çağrılır (LLR-050)
-    void onGasDetected();
+  // EKSİK OLAN BUYDU:
+  std::string getType() const { return "Stove"; }
 };
 
-// ==========================================
-// FEATURE 2: SMART FAUCET (Proxy Logic)
-// ==========================================
+// --- SMART FAUCET (Akıllı Musluk) ---
 class SmartFaucet : public Device {
 private:
-    int usageDuration; // Ne kadar süredir açık (simülasyon tick'i)
-    int maxSafetyLimit; // LLR-055 (Örn: 5 birim)
+  int usageDuration;
+  int maxSafetyLimit;
 
 public:
-    SmartFaucet(int id, std::string n);
-    
-    void togglePower(); // Açmaya çalışırken Proxy kontrolü yapar
-    Device* clone() const;
+  SmartFaucet(int id, std::string n);
+  void togglePower();
+  Device *clone() const;
+  void checkFloodRisk();
 
-    // Su taşkın kontrolü (Periyodik çağrılacak)
-    void checkFloodRisk();
+  // EKSİK OLAN BUYDU:
+  std::string getType() const { return "SmartFaucet"; }
 };
 
-// ==========================================
-// FEATURE 3: SMART FAN (Observer Logic)
-// ==========================================
+// --- SMART FAN (Akıllı Fan) ---
 class SmartFan : public Device {
 private:
-    bool autoModeEnabled;
-    int timer; 
+  bool autoModeEnabled;
+  int timer;
 
 public:
-    SmartFan(int id, std::string n);
+  SmartFan(int id, std::string n);
+  void togglePower();
+  Device *clone() const;
+  void onLightStatusChanged(bool isLightOn);
+  void updateTimer();
 
-    void togglePower();
-    Device* clone() const;
-
-    // Observer Pattern: Işık durumu değişince burası çağrılır (LLR-044)
-    // Not: Light sınıfını include etmedik, bağımlılığı kestik. 
-    // Sadece bool durum alıyoruz.
-    void onLightStatusChanged(bool isLightOn);
-    
-    void updateTimer(); // Fanın çalışıp kapanmasını sayar
+  // EKSİK OLAN BUYDU:
+  std::string getType() const { return "SmartFan"; }
 };
 
 #endif

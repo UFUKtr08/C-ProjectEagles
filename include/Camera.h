@@ -20,6 +20,7 @@ public:
     Device* clone() const { return new Camera(*this); }
 
     void detectMotion(SecuritySystem* sys);
+    std::string getType() const { return "Camera"; }
 };
 
 #endif

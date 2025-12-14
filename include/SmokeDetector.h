@@ -2,23 +2,25 @@
 #define SMOKEDETECTOR_H
 
 #include "Device.h"
+#include <iostream>
 
 class SecuritySystem;
 
 class SmokeDetector : public Device {
 public:
-    // Kritik cihazlar varsayılan olarak AÇIK başlar
-    SmokeDetector(int id, string n) : Device(id, n) { isPowered = true; }
-    ~SmokeDetector() {}
+  SmokeDetector(int id, string n) : Device(id, n) { isPowered = true; }
+  ~SmokeDetector() {}
 
-    // LLR-016: Kapatılamaz!
-    void togglePower() {
-        cout << " [ACCESS DENIED] Safety device cannot be turned off!" << endl;
-    }
+  void togglePower() {
+    cout << " [ACCESS DENIED] Safety device cannot be turned off!" << endl;
+  }
 
-    Device* clone() const { return new SmokeDetector(*this); }
+  Device *clone() const { return new SmokeDetector(*this); }
 
-    void detectSmoke(SecuritySystem* sys);
+  void detectSmoke(SecuritySystem *sys);
+
+  // EKLENEN KISIM:
+  string getType() const { return "SmokeDetector"; }
 };
 
 #endif

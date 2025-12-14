@@ -1,39 +1,31 @@
-#include "../include/Logger.h"
+#ifndef LOGGER_H
+#define LOGGER_H
+
+#include <fstream>
 #include <iostream>
+#include <string>
 
-Logger* Logger::instance = NULL;
+using namespace std;
 
-Logger::Logger() {
-    logFile.open("MSH_Log.txt", ios::app);
-    if (logFile.is_open()) {
-        // Log dosyasina baslangic notu
-        // cout << "Log System Init" << endl; 
-    }
-}
+class Logger {
+private:
+  static Logger *instance;
+  ofstream logFile;
 
-Logger::~Logger() {
-    if (logFile.is_open()) {
-        logFile.close();
-    }
-}
+  // Singleton oldugu icin constructor private
+  Logger();
 
-Logger* Logger::getInstance() {
-    if (!instance) {
-        instance = new Logger();
-    }
-    return instance;
-}
+public:
+  // Kopya olusturmayi engelle
+  Logger(const Logger &obj) = delete;
+  void operator=(const Logger &) = delete;
 
-// Overloading destegi (String ve Level)
-void Logger::log(const string& message, const string& level) {
-    if (logFile.is_open()) {
-        logFile << "[" << level << "] " << message << endl;
-        // Konsola da basmak istersen:
-        // cout << "[LOG-" << level << "] " << message << endl;
-    }
-}
+  ~Logger();
 
-// Diger siniflarin kullandigi tek parametreli versiyon
-void Logger::log(const string& message) {
-    log(message, "INFO");
-}
+  static Logger *getInstance();
+
+  // Varsayilan parametre sadece header'da olur
+  void log(const string &message, const string &level = "INFO");
+};
+
+#endif
