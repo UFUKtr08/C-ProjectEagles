@@ -20,6 +20,14 @@ public:
   virtual ~Device();
   virtual void operate() {
     cout << ">> No manual configuration available for " << getName() << "." << endl;
+  }
+  virtual vector<string> getActions() {
+    return vector<string>(); 
+  }
+
+// Seçilen yeteneği çalıştırır
+  virtual void performAction(string actionName) {
+    cout << ">> " << getName() << ": Islem tanimli degil." << endl;
 }
   int getID() const;
   string getName() const;
@@ -35,6 +43,13 @@ public:
   virtual void togglePower() = 0;
   virtual Device *clone() const = 0;
   virtual string getType() const = 0;
+  virtual vector<string> getActions() {
+    return vector<string>(); // Varsayılan boş liste
+}
+
+virtual void performAction(string actionName) {
+    cout << ">> " << getName() << ": Action not defined." << endl;
+}
 };
 
 #endif
