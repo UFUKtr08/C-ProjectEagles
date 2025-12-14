@@ -1,6 +1,7 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 #include <string>
 #include <fstream>
@@ -17,15 +18,21 @@ static const string LOG_ERR  = "ERROR";
 static const string LOG_DEBUG = "DEBUG";
 
 =======
+=======
+>>>>>>> origin/module5_ridvanserbes
 #include <string>
 #include <fstream>
 #include <iostream>
 using namespace std;
+<<<<<<< HEAD
 >>>>>>> 8d91ab7937d6b95c67b99dbbb7553c5d399ae840
+=======
+>>>>>>> origin/module5_ridvanserbes
 class Logger {
 private:
     static Logger* instance;
     ofstream logFile;
+<<<<<<< HEAD
 <<<<<<< HEAD
     
     // Private Constructor (Singleton)
@@ -46,11 +53,16 @@ public:
 };
 
 =======
+=======
+>>>>>>> origin/module5_ridvanserbes
     Logger();
 public:
     ~Logger();
     static Logger* getInstance();
     void log(const string& message);
 };
+<<<<<<< HEAD
 >>>>>>> 8d91ab7937d6b95c67b99dbbb7553c5d399ae840
+=======
+>>>>>>> origin/module5_ridvanserbes
 #endif

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "../include/Logger.h"
 <<<<<<< HEAD
 
@@ -51,24 +52,47 @@ void Logger::log(const string& message, const string& level) {
 =======
 #include <ctime>
 Logger* Logger::instance = NULL;
+=======
+#include "../include/Logger.h" 
+#include <ctime>
+
+Logger* Logger::instance = NULL;
+
+>>>>>>> origin/module5_ridvanserbes
 Logger::Logger() {
     logFile.open("MSH_Log.txt", ios::app);
     if (logFile.is_open()) log("--- SYSTEM START ---");
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/module5_ridvanserbes
 Logger::~Logger() {
     if (logFile.is_open()) {
         log("--- SYSTEM SHUTDOWN ---");
         logFile.close();
     }
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/module5_ridvanserbes
 Logger* Logger::getInstance() {
     if (instance == NULL) instance = new Logger();
     return instance;
 }
+<<<<<<< HEAD
 void Logger::log(const string& message) {
     if (logFile.is_open()) {
         logFile << "[LOG] " << message << endl;
         cout << "[LOG] " << message << endl;
 >>>>>>> 8d91ab7937d6b95c67b99dbbb7553c5d399ae840
+=======
+
+void Logger::log(const string& message) {
+    if (logFile.is_open()) {
+        logFile << "[LOG] " << message << endl;
+        cout << "[LOG] " << message << endl; 
+>>>>>>> origin/module5_ridvanserbes
     }
 }

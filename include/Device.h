@@ -3,19 +3,28 @@
 
 #include <string>
 #include <iostream>
+<<<<<<< HEAD
 // Arkadaşının Logger yapısını koruyoruz
 //#include "Logger.h" 
+=======
+#include "Logger.h" // Aynı klasörde oldukları için direkt ismiyle çağırır
+>>>>>>> origin/module5_ridvanserbes
 
 using namespace std;
 
 class Device {
 protected:
+<<<<<<< HEAD
     // --- ARKADAŞININ DEĞİŞKENLERİ (DOKUNULMADI) ---
     int deviceID;   // Senin kodunda 'id' idi, burada arkadaşınınkini (deviceID) kullanacağız.
+=======
+    int deviceID;
+>>>>>>> origin/module5_ridvanserbes
     string name;
     bool isPowered;
     bool isBroken;
 
+<<<<<<< HEAD
     // --- SENİN EKLEMEN (MERGE) 1: DEFAULT CONSTRUCTOR ---
     // Factory Pattern (new Light()) parametresiz üretim yaptığı için bu ZORUNLU.
     // Protected yaptık ki sadece alt sınıflar kullanabilsin.
@@ -50,6 +59,22 @@ public:
     // --- SENİN EKLEMEN 3: TÜR BİLGİSİ ---
     // Listeleme yaparken "Light", "TV" yazdırmak için gerekli
     virtual string getType() const = 0;
+=======
+public:
+    Device(int id, string n);
+    virtual ~Device();
+
+    int getID() const;
+    string getName() const;
+    bool getPowerStatus() const;
+    bool getBrokenStatus() const;
+    
+    void setBroken(bool status);
+
+    // Saf Sanal Fonksiyonlar (Abstract)
+    virtual void togglePower() = 0;
+    virtual Device* clone() const = 0;
+>>>>>>> origin/module5_ridvanserbes
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include "../include/Device.h"
 #include "../include/Utils.h"
+<<<<<<< HEAD
 Device::Device(int id, string n) : deviceID(id), name(n), isPowered(false), isBroken(false) {}
 Device::~Device() {}
 int Device::getID() const { return deviceID; }
@@ -22,6 +23,21 @@ int Device::getID() const { return deviceID; }
 string Device::getName() const { return name; }
 bool Device::getPowerStatus() const { return isPowered; }
 bool Device::getBrokenStatus() const { return isBroken; }
+=======
+
+Device::Device(int id, string n) : deviceID(id), name(n), isPowered(false), isBroken(false) {}
+
+Device::~Device() {}
+
+int Device::getID() const { return deviceID; }
+
+string Device::getName() const { return name; }
+
+bool Device::getPowerStatus() const { return isPowered; }
+
+bool Device::getBrokenStatus() const { return isBroken; }
+
+>>>>>>> origin/module5_ridvanserbes
 void Device::setBroken(bool status) {
     isBroken = status;
     if (isBroken) {
