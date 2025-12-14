@@ -2,124 +2,140 @@
 #include <vector>
 #include <string>
 
-// --- Headerlar ---
-// (Dosya yollari proje yapina gore degisebilir, duzgun include ettiginden emin ol)
-#include "include/Logger.h"
-#include "include/SecuritySystem.h"
-#include "include/Device.h"
-#include "include/StandardDevices.h" // Light, TV, Curtain
-#include "include/SmokeDetector.h"
-#include "include/SoundSensor.h"
-#include "include/ComplexDevices.h" // Stove, SmartFan vb.
-#include "include/Modes.h"          // NormalMode, PartyMode, CinemaMode
+// Header Dosyalari (Dizin yapina gore "../include/" kullaniyoruz)
+#include "../include/Logger.h"
+#include "../include/SecuritySystem.h"
+#include "../include/Alarm.h"
+#include "../include/StandardDevices.h" // Light, TV, Curtain
+#include "../include/SmokeDetector.h"
+#include "../include/SoundSensor.h"
+#include "../include/ComplexDevices.h" // Stove, SmartFan vb.
+#include "../include/Modes.h"          // NormalMode, PartyMode, CinemaMode
 
 using namespace std;
 
-// --- Mock Alarm (Alarm.h tam olmadigi icin basit bir implementasyon) ---
-class Siren : public Alarm {
-public:
-    void trigger() {
-        cout << "\n!!! WEE-WOO WEE-WOO !!! (Siren Caliyor)" << endl;
-        Logger::getInstance()->log("Siren triggered!", "ALARM");
-    }
-};
-
-// --- YARDIMCI TEST FONKSIYONU ---
-void printSeparator(string title) {
-    cout << "\n----------------------------------------" << endl;
+// Konsol ciktisini duzenlemek icin yardimci fonksiyon
+void printHeader(string title) {
+    cout << "\n========================================" << endl;
     cout << " TEST: " << title << endl;
-    cout << "----------------------------------------" << endl;
+    cout << "========================================" << endl;
 }
 
 int main() {
-    // 1. Logger Baslat
-    Logger::getInstance()->log("--- FULL SYSTEM TEST STARTED ---", "SYSTEM");
+    // 1. LOGGER BASLATMA
+    Logger::getInstance()->log("--- MASTER TEST STARTED ---", "SYSTEM");
 
-    // 2. Guvenlik Sistemi Kurulumu
+    // 2. GUVENLIK SISTEMI VE ALARM KURULUMU
     SecuritySystem* secSystem = new SecuritySystem();
-    Siren* mySiren = new Siren();
-    secSystem->setAlarm(mySiren);
-
-    // 3. Cihazlari Olustur (Factory pattern bypass edilerek manuel olusturuldu)
-    vector<Device*> evCihazlari;
-
-    // Standart Cihazlar
-    evCihazlari.push_back(new Light(101, "Salon Isigi"));
-    evCihazlari.push_back(new TV(102, "Salon TV"));
-    evCihazlari.push_back(new Curtain(103, "Yatak Odasi Perdesi"));
-
-    // Sensorler
-    SmokeDetector* dumanSensoru = new SmokeDetector(201, "Mutfak Duman Sensoru");
-    SoundSensor* sesSensoru = new SoundSensor(202, "Koridor Ses Sensoru");
     
-    // Karmaşık Cihazlar
-    Stove* akilliOcak = new Stove(301, "Ankastre Ocak");
-    SmartFan* akilliFan = new SmartFan(302, "Banyo Fani");
-
-    // Listeye ekle (Yonetim kolayligi icin)
-    evCihazlari.push_back(dumanSensoru);
-    evCihazlari.push_back(sesSensoru);
-    evCihazlari.push_back(akilliOcak);
-    evCihazlari.push_back(akilliFan);
-
-    // ---------------------------------------------------------
+    // Artik main icinde "class Siren" tanimlamiyoruz. Gercek Alarm sinifini kullaniyoruz.
+    Alarm* masterAlarm = new Alarm(999, "Ana Ev Sireni");
     
-    printSeparator("TEMEL CIHAZ KONTROLU");
-    // Işıkları aç, Perdeyi kapat
-    evCihazlari[0]->togglePower(); // Light ON
-    evCihazlari[2]->togglePower(); // Curtain OPEN/CLOSE
-
-    printSeparator("KARMASIK CIHAZ (OCAK) TESTI");
-    // Ocağı aç ve gözleri yak
-    akilliOcak->togglePower(); // Ana şalter ON
-    akilliOcak->controlBurner(0, true); // 1. göz ON
-    akilliOcak->controlBurner(2, true); // 3. göz ON
-    
-    printSeparator("MODE PATTERN TESTI (Party Mode)");
-    // Parti Modunu Uygula (Isiklar ve Ses sistemleri acilmali)
-    IMode* currentMode = new PartyMode();
-    cout << ">> Mod Degistiriliyor: " << currentMode->getName() << endl;
-    currentMode->execute(evCihazlari);
-    delete currentMode;
-
-    printSeparator("MODE PATTERN TESTI (Cinema Mode)");
-    // Sinema Modunu Uygula (Sadece TV acik, digerleri kapali olmali)
-    currentMode = new CinemaMode();
-    cout << ">> Mod Degistiriliyor: " << currentMode->getName() << endl;
-    currentMode->execute(evCihazlari);
-    delete currentMode;
-
-    printSeparator("GUVENLIK VE SENSOR TESTI");
-    // 1. Ses Testi
-    sesSensoru->measureLevel(40, secSystem); // Normal
-    sesSensoru->measureLevel(90, secSystem); // Yüksek (Uyarı vermeli)
-
-    // 2. Yangın Testi (Kritik!)
-    cout << ">> Simulasyon: Mutfakta duman algilandi..." << endl;
-    dumanSensoru->detectSmoke(secSystem); 
-    // Beklenen: Alarm calmasi, Logger'a yazmasi.
-
-    // 3. Ocak Guvenlik Testi (Gaz Kacagi)
-    cout << "\n>> Simulasyon: Ocakta gaz kacagi var!" << endl;
-    akilliOcak->onGasDetected(); 
-    // Beklenen: Ocagin kendini kapatmasi.
-
-    printSeparator("PROTOTYPE (CLONE) TESTI");
-    // Var olan bir ışıktan yeni bir tane kopyalayalım
-    Device* yeniIsik = evCihazlari[0]->clone();
-    // Isim private oldugu icin dogrudan degisemeyiz belki ama ID farkli olmali
-    cout << "Orijinal ID: " << evCihazlari[0]->getID() << endl;
-    cout << "Kopya ID: " << yeniIsik->getID() << " (Not: Clone icinde ID yonetimi manual degilse ayni gelebilir)" << endl;
-    delete yeniIsik;
-
-    // --- TEMIZLIK ---
-    printSeparator("SISTEM KAPATILIYOR");
-    for (size_t i = 0; i < evCihazlari.size(); ++i) {
-        delete evCihazlari[i];
+    // Alarmi "ARMED" (Acik) konuma getiriyoruz ki tetiklenince calsin
+    if (!masterAlarm->getPowerStatus()) {
+        masterAlarm->togglePower(); 
     }
-    delete secSystem;
-    delete mySiren;
-    // Logger singleton oldugu icin program bitisinde destructor cagrilir veya manuel silebilirsin.
     
+    // Alarmi sisteme bagla
+    secSystem->setAlarm(masterAlarm);
+
+
+    // 3. CIHAZLARI OLUSTURMA (Manuel Envanter)
+    vector<Device*> devices;
+
+    // -- Standart Cihazlar --
+    Light* salonIsik = new Light(101, "Salon Isigi");
+    TV* salonTV = new TV(102, "Salon TV");
+    Curtain* yatakPerde = new Curtain(103, "Yatak Odasi Perdesi");
+
+    // -- Sensorler --
+    SmokeDetector* dumanSensoru = new SmokeDetector(201, "Mutfak Duman Detektoru");
+    SoundSensor* sesSensoru = new SoundSensor(202, "Koridor Ses Sensoru");
+
+    // -- Karmasik Cihazlar --
+    Stove* akilliOcak = new Stove(301, "Ankastre Ocak");
+    SmartFan* banyoFani = new SmartFan(302, "Banyo Havalandirma");
+
+    // Yonetim icin listeye ekle
+    devices.push_back(salonIsik);
+    devices.push_back(salonTV);
+    devices.push_back(yatakPerde);
+    devices.push_back(dumanSensoru);
+    devices.push_back(sesSensoru);
+    devices.push_back(akilliOcak);
+    devices.push_back(banyoFani);
+
+
+    // ================= TEST SENARYOLARI =================
+
+    // SENARYO 1: TEMEL KONTROL
+    printHeader("TEMEL CIHAZ KONTROLU");
+    salonIsik->togglePower();    // Isik ACILDI
+    yatakPerde->togglePower();   // Perde ACILDI
+    salonTV->togglePower();      // TV ACILDI (Sonra kapatalim)
+    salonTV->togglePower();      // TV KAPANDI
+
+
+    // SENARYO 2: KARMASIK CIHAZ (OCAK)
+    printHeader("KARMASIK CIHAZ (OCAK) TESTI");
+    akilliOcak->togglePower();          // Ana gaz vanasini ac
+    akilliOcak->controlBurner(0, true); // 1. gozu yak
+    akilliOcak->controlBurner(2, true); // 3. gozu yak
+    // Ocak acikken guvenlik testi (Gaz Kacagi)
+    cout << ">> SIMULASYON: Gaz kacagi algilandi..." << endl;
+    akilliOcak->onGasDetected();        // Otomatik kapanmali
+    
+
+    // SENARYO 3: MOD DEGISIMLERI (Design Pattern: State/Strategy)
+    printHeader("MOD TESTI: PARTY MODE");
+    IMode* partyMode = new PartyMode();
+    partyMode->execute(devices); // Isiklar, Ses ve varsa ilgili cihazlar acilmali
+    delete partyMode;
+
+    printHeader("MOD TESTI: CINEMA MODE");
+    IMode* cinemaMode = new CinemaMode();
+    cinemaMode->execute(devices); // Sadece TV acik, isiklar kapanmali
+    delete cinemaMode;
+
+
+    // SENARYO 4: GUVENLIK VE SENSORLER (Design Pattern: Observer/Mediator)
+    printHeader("GUVENLIK SISTEMI TESTI");
+    
+    // a) Yuksek Ses Testi
+    cout << ">> Ses olculuyor (40dB)..." << endl;
+    sesSensoru->measureLevel(40, secSystem); // Normal
+    cout << ">> Ses olculuyor (100dB)..." << endl;
+    sesSensoru->measureLevel(100, secSystem); // UYARI vermeli (Log kontrol et)
+
+    // b) Yangin Testi
+    cout << "\n>> SIMULASYON: Yangin basladi!" << endl;
+    dumanSensoru->detectSmoke(secSystem); 
+    // BEKLENEN: Alarm calacak, sistem polise haber verecek (konsol ciktisi)
+
+
+    // SENARYO 5: PROTOTYPE (CLONE)
+    printHeader("PROTOTYPE (CLONE) TESTI");
+    Device* kopyaIsik = salonIsik->clone(); // Var olan isigin kopyasi
+    cout << "Orijinal Isik ID: " << salonIsik->getID() << " | Isim: " << salonIsik->getName() << endl;
+    cout << "Kopya Isik ID:    " << kopyaIsik->getID() << " | Isim: " << kopyaIsik->getName() << endl;
+    delete kopyaIsik; // Kopyayi temizle
+
+
+    // ================= TEMIZLIK =================
+    printHeader("SISTEM KAPATILIYOR");
+    
+    // Cihazlari temizle
+    for (size_t i = 0; i < devices.size(); ++i) {
+        delete devices[i];
+    }
+    devices.clear();
+
+    // Sistem bilesenlerini temizle
+    delete masterAlarm; // Once alarmi sil
+    delete secSystem;   // Sonra sistemi sil
+    // Logger Singleton oldugu icin program bitisinde kendi static pointer'i kalir 
+    // veya Logger::~Logger() cagrilir.
+
+    cout << "Main program sonlandi." << endl;
     return 0;
 }

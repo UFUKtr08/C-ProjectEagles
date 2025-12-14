@@ -2,7 +2,6 @@
 #include "../include/Logger.h"
 #include <iostream>
 
-// String birleştirme hatası almamak için using namespace std şart
 using namespace std;
 
 SecuritySystem::SecuritySystem() {
@@ -16,41 +15,34 @@ void SecuritySystem::setAlarm(Alarm* alm) {
 void SecuritySystem::notifyBreach(string sensorName, string breachType) {
     cout << "\n>>> SECURITY ALERT: " << breachType << " detected by " << sensorName << " <<<" << endl;
     
-    // LOGLAMA (Fatih'in Logger'ına uygun manuel formatlama)
     if (Logger::getInstance()) {
-        // "[SECURITY] Breach: MOTION (Camera1)" şeklinde tek string yapıyoruz
-        string logMsg = "[SECURITY] Breach: " + breachType + " (" + sensorName + ")";
-        Logger::getInstance()->log(logMsg);
+        string logMsg = "Breach Detected: " + breachType + " @ " + sensorName;
+        Logger::getInstance()->log(logMsg, "SECURITY");
     }
 
     triggerSequence();
 }
 
 void SecuritySystem::triggerSequence() {
-    cout << "--- SECURITY PROTOCOL INITIATED ---" << endl;
+    cout << "--- SECURITY PROTOCOL STARTED ---" << endl;
     
-    cout << "1. [ACTION] Triggering Alarm..." << endl;
     if (attachedAlarm) {
         attachedAlarm->trigger();
     } else {
         cout << "   (No alarm attached!)" << endl;
     }
 
-    cout << "2. [ACTION] Turning ON all lights (Simulated)..." << endl;
-    cout << "3. [ACTION] Dialing 155 (Police)..." << endl;
-    
-    if (Logger::getInstance()) {
-        Logger::getInstance()->log("[SECURITY] Protocol Executed: Alarm -> Lights -> Police");
-    }
+    // Chain of Responsibility benzeri sirali islem
+    cout << "2. Lights turned ON (Simulated)" << endl;
+    cout << "3. Police notified (Simulated)" << endl;
 }
 
 void SecuritySystem::checkNoiseLevel(int db) {
+    // 80dB uzeri gurultu supheli kabul edilir
     if (db > 80) {
         cout << "\n>>> [WARNING] HIGH NOISE LEVEL (" << db << "dB) <<<" << endl;
-        
         if (Logger::getInstance()) {
-            // int stringe çevirmekle uğraşmamak için basit mesaj
-            Logger::getInstance()->log("[SECURITY] [WARNING] High noise level detected!");
+            Logger::getInstance()->log("High noise level detected: " + intToString(db) + "dB", "WARNING");
         }
     }
 }
