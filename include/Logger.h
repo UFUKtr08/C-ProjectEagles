@@ -1,5 +1,6 @@
 #ifndef LOGGER_H
 #define LOGGER_H
+<<<<<<< HEAD
 
 #include <string>
 #include <fstream>
@@ -15,10 +16,17 @@ static const string LOG_WARN = "WARNING";
 static const string LOG_ERR  = "ERROR";
 static const string LOG_DEBUG = "DEBUG";
 
+=======
+#include <string>
+#include <fstream>
+#include <iostream>
+using namespace std;
+>>>>>>> 8d91ab7937d6b95c67b99dbbb7553c5d399ae840
 class Logger {
 private:
     static Logger* instance;
     ofstream logFile;
+<<<<<<< HEAD
     
     // Private Constructor (Singleton)
     Logger();
@@ -37,4 +45,12 @@ public:
     void log(const string& message, const string& level);
 };
 
+=======
+    Logger();
+public:
+    ~Logger();
+    static Logger* getInstance();
+    void log(const string& message);
+};
+>>>>>>> 8d91ab7937d6b95c67b99dbbb7553c5d399ae840
 #endif
