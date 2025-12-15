@@ -1,0 +1,322 @@
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 9
+[INFO] User Input (Int): 2
+[INFO] User Input (String): Stove
+[INFO] User Input (String): Batuhan
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 4
+[INFO] User Input (Int): 5
+[INFO] Bathroom Fan started manually.
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 3
+[INFO] User Input (Int): 10
+[INFO] User Input (Int): 5
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 5
+[INFO] User Input (Int): 5
+[INFO] Bathroom Fan stopped.
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 3
+[INFO] User Input (Int): 4
+[INFO] User Input (Int): 1
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 4
+[INFO] User Input (Int): 6
+[INFO] Kitchen Stove main switch turned ON.
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 4
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 4
+[INFO] User Input (Int): 4
+[INFO] User Input (Int): 5
+[INFO] User Input (Int): 4
+[INFO] Bathroom Fan Auto-Started because Light turned OFF.
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 5
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 4
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 4
+[INFO] User Input (Int): 3
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 4
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 1
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 4
+[INFO] User Input (Int): 5
+[INFO] Bathroom Fan started manually.
+[INFO] User Input (Int): 11
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 5
+[INFO] User Input (Int): 3
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 4
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 5
+[INFO] User Input (Int): 4
+[INFO] User Input (Int): 4
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 3
+[INFO] User Input (Int): 9
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 9
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 2
+[INFO] User Input (String): 8
+[INFO] User Input (String): Duman dedîktîrÅ
+[INFO] User Input (Int): 2
+[INFO] User Input (String): 8
+[INFO] User Input (String): SmokeDetector
+[INFO] User Input (Int): 2
+[INFO] User Input (String): SmokeDetector
+[INFO] User Input (String): duman1
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 1
+[INFO] System state saved to history.
+[INFO] Switching to Normal Mode...
+[INFO] Mode executing: NORMAL MODE
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 2
+[INFO] System state saved to history.
+[INFO] Switching to Party Mode...
+[INFO] Mode executing: PARTY MODE
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 3
+[INFO] System state saved to history.
+[INFO] Switching to Cinema Mode...
+[INFO] Mode executing: CINEMA MODE
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 2
+[INFO] System state saved to history.
+[INFO] Switching to Party Mode...
+[INFO] Mode executing: PARTY MODE
+[INFO] User Input (Int): 1
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 3
+[INFO] System state saved to history.
+[INFO] Switching to Cinema Mode...
+[INFO] Mode executing: CINEMA MODE
+[INFO] User Input (Int): 9
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 9
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 9
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 9
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 9
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 9
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 9
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 9
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 2
+[INFO] System state saved to history.
+[INFO] Switching to Party Mode...
+[INFO] Mode executing: PARTY MODE
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 2
+[INFO] System state saved to history.
+[INFO] Switching to Party Mode...
+[INFO] Mode executing: PARTY MODE
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 12
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 12
+[INFO] User Input (Int): 9
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 3
+[INFO] System state saved to history.
+[INFO] Switching to Cinema Mode...
+[INFO] Mode executing: CINEMA MODE
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 9
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 9
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 2
+[INFO] System state saved to history.
+[INFO] Switching to Party Mode...
+[INFO] Mode executing: PARTY MODE
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 9
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 3
+[INFO] System state saved to history.
+[INFO] Switching to Cinema Mode...
+[INFO] Mode executing: CINEMA MODE
+[INFO] User Input (Int): 7
+[INFO] Restoring previous system state...
+[INFO] System restored to previous state.
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 7
+[INFO] WARNING: No previous state to restore!
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 4
+[INFO] System state saved to history.
+[INFO] Switching to Sleep Mode...
+[INFO] Mode executing: SLEEP MODE
+[INFO] User Input (Int): 4
+[INFO] Bathroom Fan started manually.
+[INFO] Kitchen Faucet opened. Water is flowing.
+[INFO] Kitchen Stove main switch turned ON.
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 4
+[INFO] System state saved to history.
+[INFO] Switching to Sleep Mode...
+[INFO] Mode executing: SLEEP MODE
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 4
+[INFO] Bathroom Fan started manually.
+[INFO] Kitchen Faucet opened. Water is flowing.
+[INFO] Kitchen Stove main switch turned ON.
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 4
+[INFO] System state saved to history.
+[INFO] Switching to Sleep Mode...
+[INFO] Mode executing: SLEEP MODE
+[INFO] Bathroom Fan stopped.
+[INFO] Kitchen Stove main switch turned OFF.
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 2
+[INFO] User Input (String): Smoke Detector
+[INFO] User Input (String): Batuhan
+[INFO] User Input (Int): 2
+[INFO] User Input (String): SmokeDetector
+[INFO] User Input (String): G1
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 5
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 4
+[INFO] System state saved to history.
+[INFO] Switching to Sleep Mode...
+[INFO] Mode executing: SLEEP MODE
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 2
+[INFO] User Input (String): 5
+[INFO] User Input (String): 
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 4
+[INFO] System state saved to history.
+[INFO] Switching to Sleep Mode...
+[INFO] Mode executing: SLEEP MODE
+[INFO] User Input (Int): 1

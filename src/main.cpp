@@ -44,22 +44,40 @@ int main() {
 
   // --- VARSAYILAN CİHAZLAR ---
   Logger::getInstance()->log("Loading default devices...", "SYSTEM");
+  
   deviceMgr.addDevice("Light", "Living Room Light");
   deviceMgr.addDevice("TV", "Smart TV");
   deviceMgr.addDevice("Curtain", "Balcony Curtain");
   deviceMgr.addDevice("Light", "Toilet Light");      
   deviceMgr.addDevice("SmartFan", "Bathroom Fan");
   deviceMgr.addDevice("SmartFaucet", "Kitchen Faucet");   
-  deviceMgr.addDevice("Stove", "Kitchen Stove");     
+  deviceMgr.addDevice("Stove", "Kitchen Stove");
+
+  // Güvenlik Cihazları
+  deviceMgr.addDevice("SmokeDetector", "Kitchen Smoke Detector");
+  deviceMgr.addDevice("Camera", "Main Door Camera");              
+  deviceMgr.addDevice("SoundSensor", "Saloon Noise Sensor");      
+
+  // --- GÜVENLİK BAŞLANGIÇ KONTROLÜ (YENİ) ---
+  // Program başlarken güvenlik cihazlarını OTOMATİK AÇ
+  vector<Device *> &allDevs = deviceMgr.getDevicesRef();
+  for(size_t i=0; i<allDevs.size(); i++) {
+      string t = allDevs[i]->getType();
+      // Eğer cihaz güvenlik tipindeyse ve kapalıysa AÇ
+      if(t == "Camera" || t == "SoundSensor" || t == "SmokeDetector") {
+          if(!allDevs[i]->getPowerStatus()) {
+              allDevs[i]->togglePower();
+          }
+      }
+  }
+  // ------------------------------------------
 
   bool isRunning = true;
   while (isRunning) {
     menu.displayOptions();
     
-    // Su Taşkını seçeneği kaldırıldı
     cout << "[11] Wait / Pass Time (Trigger Automations)" << endl;
 
-    // Seçenek sınırını tekrar 11 yaptık
     int choice = input.getIntInput(1, 11, "\n>> Select Option: ");
     vector<Device *> &currentDevices = deviceMgr.getDevicesRef();
 
@@ -136,14 +154,15 @@ int main() {
         break;
     }
 
-    case 6: // Change Mode (ONAY MESAJLI)
+    case 6: // Change Mode
     {
-        cout << "[1] Normal [2] Party [3] Cinema" << endl;
-        int m = input.getIntInput(1, 3, "Select Mode: ");
+        cout << "[1] Normal [2] Party [3] Cinema [4] Sleep" << endl;
+        int m = input.getIntInput(1, 4, "Select Mode: ");
         
         if(m==1) modeMgr.setMode(new NormalMode(), currentDevices);
         else if(m==2) modeMgr.setMode(new PartyMode(), currentDevices);
         else if(m==3) modeMgr.setMode(new CinemaMode(), currentDevices);
+        else if(m==4) modeMgr.setMode(new SleepMode(), currentDevices);
         
         cout << "\n>> MOD DEGISTIRME BASARILI: " << modeMgr.getCurrentModeName() << " Modu Aktif Edildi." << endl;
         
@@ -156,7 +175,7 @@ int main() {
         input.waitPressEnter(); 
         break;
 
-    case 8: // Manual / Simulation Actions
+    case 8: // Manual Actions
     {
         cout << "\n--- AVAILABLE ACTIONS ---" << endl;
         vector< pair<Device*, string> > actionList;
@@ -180,7 +199,7 @@ int main() {
         input.waitPressEnter(); break;
     }
 
-    case 9: // ABOUT MENÜSÜ (İsim Listesi)
+    case 9: // ABOUT MENÜSÜ
     {
         cout << "\n========================================" << endl;
         cout << "Proje Adi: My Sweet Home (MSH) v3.0" << endl;
