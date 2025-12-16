@@ -320,3 +320,250 @@
 [INFO] Switching to Sleep Mode...
 [INFO] Mode executing: SLEEP MODE
 [INFO] User Input (Int): 1
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 10
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 9
+[INFO] !!! EMERGENCY !!! Gas Detected near Kitchen Stove. Auto-Shutting OFF!
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 4
+[INFO] Bathroom Fan started manually.
+[INFO] Kitchen Faucet opened. Water is flowing.
+[INFO] Kitchen Stove main switch turned ON.
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 9
+[INFO] !!! EMERGENCY !!! Gas Detected near Kitchen Stove. Auto-Shutting OFF!
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 11
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 7
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 9
+[INFO] !!! EMERGENCY !!! Gas Detected near Kitchen Stove. Auto-Shutting OFF!
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 11
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 3
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 10
+[INFO] User Input (Int): 2
+[INFO] User Input (String): Curtain
+[INFO] User Input (String): Oda1
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 2
+[INFO] System state saved to history.
+[INFO] Switching to Party Mode...
+[INFO] Mode executing: PARTY MODE
+[INFO] User Input (Int): 3
+[INFO] User Input (Int): 11
+[INFO] User Input (Int): 1
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 2
+[INFO] System state saved to history.
+[INFO] Switching to Party Mode...
+[INFO] Mode executing: PARTY MODE
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 4
+[INFO] System state saved to history.
+[INFO] Switching to Sleep Mode...
+[INFO] Mode executing: SLEEP MODE
+[INFO] User Input (Int): 9
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 5
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 4
+[INFO] System state saved to history.
+[INFO] Switching to Sleep Mode...
+[INFO] Mode executing: SLEEP MODE
+[INFO] [Security] Saloon Noise Sensor forced ON during Sleep Mode.
+[INFO] User Input (Int): 9
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 4
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 5
+[INFO] Bathroom Fan Auto-Started because Light turned OFF.
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 2
+[INFO] System state saved to history.
+[INFO] Switching to Party Mode...
+[INFO] Mode executing: PARTY MODE
+[INFO] Bathroom Fan stopped.
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 7
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 7
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 4
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 5
+[INFO] Bathroom Fan Auto-Started because Light turned OFF.
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 4
+[INFO] User Input (Int): 5
+[INFO] Bathroom Fan Auto-Started because Light turned OFF.
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 2
+[INFO] System state saved to history.
+[INFO] Switching to Party Mode...
+[INFO] Mode executing: PARTY MODE
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 2
+[INFO] System state saved to history.
+[INFO] Switching to Party Mode...
+[INFO] Mode executing: PARTY MODE
+[INFO] User Input (Int): 1
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 2
+[INFO] System state saved to history.
+[INFO] Switching to Party Mode...
+[INFO] Mode executing: PARTY MODE
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 3
+[INFO] System state saved to history.
+[INFO] Switching to Cinema Mode...
+[INFO] Mode executing: CINEMA MODE
+[INFO] User Input (Int): 4
+[INFO] Bathroom Fan started manually.
+[INFO] Kitchen Faucet opened. Water is flowing.
+[INFO] Kitchen Stove main switch turned ON.
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 4
+[INFO] System state saved to history.
+[INFO] Switching to Sleep Mode...
+[INFO] Mode executing: SLEEP MODE
+[INFO] Bathroom Fan stopped.
+[INFO] Kitchen Stove main switch turned OFF.
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 2
+[INFO] System state saved to history.
+[INFO] Switching to Party Mode...
+[INFO] Mode executing: PARTY MODE
+[INFO] Kitchen Faucet closed.
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 4
+[INFO] Bathroom Fan started manually.
+[INFO] Kitchen Faucet opened. Water is flowing.
+[INFO] Kitchen Stove main switch turned ON.
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 2
+[INFO] System state saved to history.
+[INFO] Switching to Party Mode...
+[INFO] Mode executing: PARTY MODE
+[INFO] Bathroom Fan stopped.
+[INFO] Kitchen Faucet closed.
+[INFO] Kitchen Stove main switch turned OFF.
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 5
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 2
+[INFO] System state saved to history.
+[INFO] Switching to Party Mode...
+[INFO] Mode executing: PARTY MODE
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 4
+[INFO] Bathroom Fan started manually.
+[INFO] Kitchen Faucet opened. Water is flowing.
+[INFO] Kitchen Stove main switch turned ON.
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 2
+[INFO] System state saved to history.
+[INFO] Switching to Party Mode...
+[INFO] Mode executing: PARTY MODE
+[INFO] Bathroom Fan stopped.
+[INFO] Kitchen Faucet closed.
+[INFO] Kitchen Stove main switch turned OFF.
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 5
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 4
+[INFO] System state saved to history.
+[INFO] Switching to Sleep Mode...
+[INFO] Mode executing: SLEEP MODE
+[INFO] [Security] Saloon Noise Sensor forced ON during Sleep Mode.
+[INFO] User Input (Int): 6
+[INFO] User Input (Int): 2
+[INFO] System state saved to history.
+[INFO] Switching to Party Mode...
+[INFO] Mode executing: PARTY MODE
+[INFO] User Input (Int): 3
+[INFO] User Input (Int): 10
+[INFO] User Input (Int): 3
+[INFO] User Input (Int): 8
+[INFO] User Input (Int): 1
+[INFO] User Input (Int): 10
+[SYSTEM] --- SYSTEM BOOT SEQUENCE INITIATED ---
+[INFO] [Alarm] Master Alarm is now ARMED
+[SYSTEM] Loading default devices...
+[INFO] User Input (Int): 9
+[INFO] User Input (Int): 10

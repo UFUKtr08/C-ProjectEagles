@@ -24,7 +24,6 @@ public:
         Logger::getInstance()->log("Mode executing: NORMAL MODE");
         for (size_t i = 0; i < devices.size(); ++i) {
             string n = devices[i]->getName();
-            // Normalde isiklar acik olsun
             if (n.find("Light") != string::npos) {
                 if (!devices[i]->getPowerStatus()) devices[i]->togglePower();
             } 
@@ -33,23 +32,44 @@ public:
     string getName() const { return "Normal"; }
 };
 
-// Party Modu
+// --- PARTİ MODU (GÜNCELLENDİ) ---
 class PartyMode : public IMode {
 public:
     void execute(vector<Device*>& devices) {
         Logger::getInstance()->log("Mode executing: PARTY MODE");
+        cout << "\n>> [PARTY MODE] Ortam ayarlaniyor..." << endl;
+
         for (size_t i = 0; i < devices.size(); ++i) {
             string n = devices[i]->getName();
-            // Isik ve Ses acik
+            string t = devices[i]->getType();
+
+            // --- 1. ÖZEL KURAL: SALOON NOISE SENSOR KAPATILSIN ---
+            // Parti gürültülü olacağı için bu sensörü özellikle kapatıyoruz.
+            bool isNoiseSensor = (n == "Saloon Noise Sensor") || 
+                                 (t == "SoundSensor") || 
+                                 (n.find("Noise Sensor") != string::npos);
+
+            if (isNoiseSensor) {
+                if (devices[i]->getPowerStatus()) { // Eğer cihaz AÇIK ise
+                    devices[i]->togglePower();      // KAPAT
+                    cout << "   -> [Auto-OFF] " << n << " (Parti gürültüsü nedeniyle kapatildi)" << endl;
+                }
+                continue; // Bu cihazla işimiz bitti, sonraki cihaza geç
+            }
+
+            // 2. DİĞER GÜVENLİK CİHAZLARI (Kamera, Alarm, Duman) - AÇIK KALSIN
+            if (t == "Camera" || t == "SmokeDetector" || t == "Alarm") {
+                if (!devices[i]->getPowerStatus()) devices[i]->togglePower();
+                continue;
+            }
+
+            // 3. EĞLENCE CİHAZLARI (Işıklar ve Hoparlörler AÇILSIN)
             if (n.find("Light") != string::npos || n.find("Sound") != string::npos) {
                 if (!devices[i]->getPowerStatus()) devices[i]->togglePower();
             } 
+            // 4. DİĞER CİHAZLAR KAPANSIN
             else {
-                // Diger seyler kapali olabilir (GUVENLIK HARIC)
-                string t = devices[i]->getType();
-                if (t != "Camera" && t != "SmokeDetector" && t != "SoundSensor" && t != "Alarm") {
-                    if (devices[i]->getPowerStatus()) devices[i]->togglePower();
-                }
+                if (devices[i]->getPowerStatus()) devices[i]->togglePower();
             }
         }
     }
@@ -65,13 +85,12 @@ public:
             string n = devices[i]->getName();
             string t = devices[i]->getType();
 
-            // GUVENLIK KONTROLU: Bunlari kapatma!
-            if (t == "Camera" || t == "SmokeDetector" || t == "SoundSensor" || t == "Alarm") {
+            // Güvenlik cihazlarını koru (Ses Sensörü hariç, kullanıcı manuel kontrol istiyor)
+            if (t == "Camera" || t == "SmokeDetector" || t == "Alarm") {
                  if (!devices[i]->getPowerStatus()) devices[i]->togglePower();
-                 continue; // Döngüyü atla, alttaki kapatma koduna girme
+                 continue; 
             }
 
-            // Sadece TV acik
             if (n.find("TV") != string::npos) {
                 if (!devices[i]->getPowerStatus()) devices[i]->togglePower();
             } 
@@ -83,7 +102,7 @@ public:
     string getName() const { return "Cinema"; }
 };
 
-// --- GÜNCELLENEN UYKU MODU (Güvenlik Korumalı) ---
+// Uyku Modu
 class SleepMode : public IMode {
 public:
     void execute(vector<Device*>& devices) {
@@ -92,25 +111,20 @@ public:
             string n = devices[i]->getName();
             string t = devices[i]->getType(); 
             
-            // --- GÜVENLİK DUVARI ---
-            // Eğer cihaz güvenlik cihazıysa ASLA kapatma, aksine AÇIK olduğundan emin ol.
-            if (t == "Camera" || t == "SmokeDetector" || t == "SoundSensor" || t == "Alarm") {
+            // Güvenlik cihazlarını koru
+            if (t == "Camera" || t == "SmokeDetector" || t == "Alarm") {
                 if (!devices[i]->getPowerStatus()) {
-                    devices[i]->togglePower(); // Kapalıysa zorla aç
-                    Logger::getInstance()->log("[Security] " + n + " forced ON during Sleep Mode.");
+                    devices[i]->togglePower();
                 }
-                continue; // Döngünün geri kalanını atla (Kapatma komutlarına gitme)
+                continue; 
             }
-            // -----------------------
 
             bool shouldTurnOff = false;
-
             if (n.find("Light") != string::npos) shouldTurnOff = true;
             else if (n.find("Curtain") != string::npos) shouldTurnOff = true;
             else if (n.find("TV") != string::npos) shouldTurnOff = true;
             else if (n.find("Fan") != string::npos) shouldTurnOff = true;    
             else if (n.find("Stove") != string::npos) shouldTurnOff = true;  
-            
             if (t == "Stove" || t == "SmartFan") shouldTurnOff = true;
 
             if (shouldTurnOff && devices[i]->getPowerStatus()) {

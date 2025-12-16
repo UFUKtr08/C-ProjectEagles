@@ -58,12 +58,14 @@ int main() {
   deviceMgr.addDevice("Camera", "Main Door Camera");              
   deviceMgr.addDevice("SoundSensor", "Saloon Noise Sensor");      
 
-  // --- GÜVENLİK BAŞLANGIÇ KONTROLÜ ---
-  // Program başlarken güvenlik cihazlarını OTOMATİK AÇ
+  // --- GÜVENLİK BAŞLANGIÇ KONTROLÜ (GÜNCELLENDİ) ---
+  // Ses Sensörü buradan çıkarıldı, sadece Kamera ve Duman Dedektörü zorla açılıyor.
   vector<Device *> &allDevs = deviceMgr.getDevicesRef();
   for(size_t i=0; i<allDevs.size(); i++) {
       string t = allDevs[i]->getType();
-      if(t == "Camera" || t == "SoundSensor" || t == "SmokeDetector") {
+      
+      // SoundSensor ARTIK BURADA YOK
+      if(t == "Camera" || t == "SmokeDetector") {
           if(!allDevs[i]->getPowerStatus()) {
               allDevs[i]->togglePower();
           }
@@ -122,6 +124,8 @@ int main() {
                 if (!d->getPowerStatus()) {
                     d->togglePower();
                     if(d->getType() == "Light") deviceMgr.notifyLightSwitch(true, d->getName());
+                    // Otomasyon mesajı ekledik
+                    if(d->getType() == "SoundSensor") cout << ">> Sound Sensor ACTIVATED manually." << endl;
                 } else cout << ">> Info: Device is already ON." << endl;
             } else cout << "!! Error: Device not found." << endl;
         }
@@ -146,6 +150,7 @@ int main() {
                 if (d->getPowerStatus()) {
                     d->togglePower();
                     if(d->getType() == "Light") deviceMgr.notifyLightSwitch(false, d->getName());
+                    if(d->getType() == "SoundSensor") cout << ">> Sound Sensor DEACTIVATED manually." << endl;
                 } else cout << ">> Info: Device is already OFF." << endl;
             } else cout << "!! Error: Device not found." << endl;
         }
@@ -163,7 +168,6 @@ int main() {
         else if(m==3) modeMgr.setMode(new CinemaMode(), currentDevices);
         else if(m==4) modeMgr.setMode(new SleepMode(), currentDevices);
         
-        // --- GÜNCELLENEN KISIM (İNGİLİZCE) ---
         cout << "\n>> MODE CHANGE SUCCESSFUL: " << modeMgr.getCurrentModeName() << " Mode Activated." << endl;
         
         input.waitPressEnter(); 
