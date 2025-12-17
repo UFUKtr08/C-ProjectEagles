@@ -2,79 +2,97 @@
 #define COMPLEX_DEVICES_H
 
 #include "Device.h"
+#include "IComplexControl.h"
 #include <string>
 #include <vector>
 
-// --- BURNER CLASS (Ocak Gözü) ---
 class Burner {
-private:
-  int id;
+public:
   bool isOn;
-
-public:
-  Burner(int i) : id(i), isOn(false) {}
+  Burner() : isOn(false) {}
   void setFire(bool status);
-  bool getStatus() const { return isOn; }
 };
 
-// --- STOVE CLASS (Ocak) ---
-class Stove : public Device {
-private:
-  std::vector<Burner *> burners;
-
-public:
-  Stove(int id, std::string n);
-  ~Stove();
-
-  void togglePower();
-  Device *clone() const;
-  void controlBurner(int index, bool status);
-  void onGasDetected();
-  void operate();
-  std::string getType() const { return "Stove"; }
-
-  // --- EKSİK OLAN TANIMLAR EKLENDİ ---
-  std::vector<std::string> getActions();
-  void performAction(std::string actionName);
-};
-
-// --- SMART FAUCET (Akıllı Musluk) ---
-class SmartFaucet : public Device {
-private:
-  int usageDuration;
-  int maxSafetyLimit;
-
-public:
-  SmartFaucet(int id, std::string n);
-  void togglePower();
-  Device *clone() const;
-  void checkFloodRisk();
-  void operate();
-  std::string getType() const { return "SmartFaucet"; }
-
-  // --- EKSİK OLAN TANIMLAR EKLENDİ ---
-  std::vector<std::string> getActions();
-  void performAction(std::string actionName);
-};
-
-// --- SMART FAN (Akıllı Fan) ---
+// --- SmartFan ---
 class SmartFan : public Device {
 private:
   bool autoModeEnabled;
   int timer;
 
 public:
-  SmartFan(int id, std::string n);
-  void togglePower();
-  Device *clone() const;
+  SmartFan(int id, std::string name);
+
+  void togglePower() override;
+  Device *clone() const override;
+  std::string getType() const override;
+
   void onLightStatusChanged(bool isLightOn);
   void updateTimer();
-  void operate();
-  std::string getType() const { return "SmartFan"; }
+  void operate() override;
+  std::vector<std::string> getActions() override;
+  void performAction(std::string actionName) override;
+  
+  // LLR-046: Toggle auto-ventilation feature
+  void toggleAutoMode();
+  bool isAutoModeEnabled() const { return autoModeEnabled; }
+};
 
-  // --- EKSİK OLAN TANIMLAR EKLENDİ ---
-  std::vector<std::string> getActions();
-  void performAction(std::string actionName);
+// --- SmartFaucet ---
+class SmartFaucet : public Device {
+private:
+  int usageDuration;
+  int maxSafetyLimit;
+  bool isLeaking;
+  bool floodPreventionEnabled; // LLR-056: Toggleable flood prevention
+
+public:
+  SmartFaucet(int id, std::string name);
+
+  void togglePower() override;
+  Device *clone() const override;
+  std::string getType() const override;
+
+  void checkFloodRisk();
+  void simulateWaterLeak();
+  void operate() override;
+  std::vector<std::string> getActions() override;
+  void performAction(std::string actionName) override;
+  
+  // LLR-056: Toggle flood prevention feature
+  void toggleFloodPrevention();
+  bool isFloodPreventionEnabled() const { return floodPreventionEnabled; }
+};
+
+// --- Stove ---
+class Stove : public Device, public IComplexControl {
+private:
+  std::vector<Burner> burners;
+  bool gasLeakDetected; // Yeni: Gaz kaçağı durumu
+
+public:
+  Stove(int id, std::string name);
+  ~Stove() override;
+
+  void togglePower() override;
+  Device *clone() const override;
+  std::string getType() const override;
+
+  void controlBurner(int index, bool status);
+  void onGasDetected();
+  void simulateGasLeak(); // Yeni: Simülasyon fonksiyonu
+
+  void operate() override;
+  std::vector<std::string> getActions() override;
+  void performAction(std::string actionName) override;
+
+  bool getPowerStatus() const;
+  std::string getName() const;
+
+  // IComplexControl
+  void showSubComponents() override;
+  void operateSubComponent(int index, bool turnOn) override;
+  void toggleAll(bool turnOn) override;
+  int getSubComponentCount() override;
 };
 
 #endif

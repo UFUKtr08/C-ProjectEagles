@@ -18,9 +18,10 @@ protected:
 public:
   Device(int id, string n);
   virtual ~Device();
-  
+
   virtual void operate() {
-    cout << ">> No manual configuration available for " << getName() << "." << endl;
+    cout << ">> No manual configuration available for " << getName() << "."
+         << endl;
   }
 
   int getID() const;
@@ -40,11 +41,16 @@ public:
   // (Sadece tek bir tanım olmalı!)
 
   virtual vector<string> getActions() {
-      return vector<string>(); // Varsayılan boş liste
+    return vector<string>(); // Varsayılan boş liste
   }
 
   virtual void performAction(string actionName) {
-      cout << ">> " << getName() << ": Action not defined." << endl;
+    cout << ">> " << getName() << ": Action not defined." << endl;
+  }
+
+  virtual void displayStatus() {
+    cout << "[" << getID() << "] " << getName() << " ["
+         << (getPowerStatus() ? "ON" : "OFF") << "]" << endl;
   }
 };
 

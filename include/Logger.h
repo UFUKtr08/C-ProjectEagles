@@ -1,8 +1,11 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
+#include <ctime>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 using namespace std;
@@ -23,6 +26,9 @@ public:
   ~Logger();
 
   static Logger *getInstance();
+
+  // Get current timestamp
+  string getTimestamp();
 
   // Varsayilan parametre sadece header'da olur
   void log(const string &message, const string &level = "INFO");

@@ -2,27 +2,31 @@
 #define CAMERA_H
 
 #include "Device.h"
-#include <iostream>
+#include <string>
+#include <vector>
 
-class SecuritySystem; // Forward Declaration
+// Forward Declaration
+class SecuritySystem;
 
 class Camera : public Device {
+private:
+  bool isRecording;
+  bool nightVisionMode;
+
 public:
-    Camera(int id, string n) : Device(id, n) {}
-    ~Camera() {}
+  Camera(int id, std::string n);
 
-    // EKSİK OLAN PARÇA BU:
-    void togglePower() {
-        isPowered = !isPowered;
-        cout << getName() << (isPowered ? " is now ON." : " is now OFF.") << endl;
-    }
+  void togglePower() override;
+  Device *clone() const override;
+  std::string getType() const override;
+  std::vector<std::string> getActions() override;
+  void performAction(std::string actionName) override;
 
-    Device* clone() const { return new Camera(*this); }
-
-    void detectMotion(SecuritySystem* sys);
-    std::string getType() const { return "Camera"; }
-    std::vector<std::string> getActions();
-    void performAction(std::string actionName);
+  // Özel Metodlar
+  void startRecording();
+  void stopRecording();
+  void toggleNightVision();
+  void detectMotion(SecuritySystem *sys);
 };
 
 #endif

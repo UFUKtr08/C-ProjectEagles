@@ -1,20 +1,29 @@
 #include "../include/SmokeDetector.h"
-#include "../include/SecuritySystem.h"
-#include <iostream>
+#include "../include/SecuritySystem.h" // BAĞLANTIYI KURAN KİLİT SATIR!
 
-void SmokeDetector::detectSmoke(SecuritySystem* sys) {
-    cout << " [DANGER] SMOKE detected by " << getName() << "!" << endl;
-    // Yangın alarmı gönder
-    if (sys) sys->notifyBreach(getName(), "FIRE");
-}
-vector<string> SmokeDetector::getActions() {
-    vector<string> list;
-    list.push_back("Trigger Smoke Alarm");
-    return list;
+using namespace std;
+
+void SmokeDetector::detectSmoke(SecuritySystem *sys) {
+  cout << "\n>> SMOKE DETECTED by " << name << "!" << endl;
+  cout << ">> Initiating Emergency Protocols..." << endl;
+
+  // EĞER SİSTEM BAĞLIYSA HABER VER (INTEGRATION)
+  if (sys) {
+    sys->notifyBreach(name, "FIRE_DETECTED");
+  } else {
+    cout
+        << "[WARNING] Security System not connected! Local alarm sounding only."
+        << endl;
+  }
 }
 
 void SmokeDetector::performAction(string actionName) {
-    if (actionName == "Trigger Smoke Alarm") {
-        cout << ">> [SMOKE] Sensor triggered manually! Fire suspected." << endl;
-    }
+  if (actionName == "Check Status") {
+    cout << "Smoke Detector is Active and Monitoring." << endl;
+  } else if (actionName == "SIMULATE SMOKE") {
+    // Test sırasında sistemi 'nullptr' geçiyoruz çünkü arayüzden sys'ye
+    // erişimimiz yok. Ama gerçek main loop içinde bu sys dolu gelecek.
+    // Simülasyonun çalıştığını görmek için şimdilik nullptr ile çağırıyoruz.
+    detectSmoke(nullptr);
+  }
 }

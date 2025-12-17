@@ -12,6 +12,7 @@ public:
     void displayWelcome();
     void displayOptions();
     void displayHeader();
+    void displayManual();
     void clearScreen();
 };
 

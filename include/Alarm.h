@@ -2,35 +2,31 @@
 #define ALARM_H
 
 #include "Device.h"
-#include "Logger.h"
-#include <iostream>
+#include <string>
+#include <vector>
 
 class Alarm : public Device {
+private:
+  bool isTriggered;
+  std::string pinCode;
+
 public:
-  Alarm(int id, string n) : Device(id, n) {}
-  ~Alarm() {}
+  // Constructor
+  Alarm(int id, std::string n);
 
-  void trigger() {
-    if (isPowered) {
-      Logger::getInstance()->log("!!! ALARM TRIGGERED !!! (" + getName() + ")",
-                                 "ALARM");
-      cout << "\n>>> WEE-WOO WEE-WOO! <<<\n" << endl;
-    } else {
-      Logger::getInstance()->log("Alarm signal received but DISARMED.",
-                                 "WARNING");
-    }
-  }
+  // Override Metodlar (Sadece Tanım)
+  void togglePower() override;
+  Device *clone() const override;
+  std::string getType() const override;
+  std::vector<std::string> getActions() override;
+  void performAction(std::string actionName) override;
 
-  void togglePower() {
-    isPowered = !isPowered;
-    string status = isPowered ? "ARMED" : "DISARMED";
-    Logger::getInstance()->log("[Alarm] " + getName() + " is now " + status);
-  }
+  // Özel Metodlar (Sadece Tanım)
+  void triggerAlarm();
+  void resetAlarm(std::string pin);
 
-  Device *clone() const { return new Alarm(*this); }
-
-  // EKLENEN KISIM:
-  string getType() const { return "Alarm"; }
+  // Hata veren "no declaration matches" kısmı buydu, buraya ekledik:
+  bool getTriggerStatus() const;
 };
 
 #endif

@@ -18,10 +18,18 @@ Logger *Logger::getInstance() {
   return instance;
 }
 
+string Logger::getTimestamp() {
+  time_t now = time(nullptr);
+  struct tm *timeinfo = localtime(&now);
+  char buffer[25];
+  strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", timeinfo);
+  return string(buffer);
+}
+
 void Logger::log(const string &message, const string &level) {
   if (logFile.is_open()) {
-    logFile << "[" << level << "] " << message << endl;
-    // Konsolda da gorelim
-    cout << "[" << level << "] " << message << endl;
+    string timestamp = getTimestamp();
+    logFile << "[" << timestamp << "][" << level << "] " << message << endl;
+    cout << "[" << timestamp << "][" << level << "] " << message << endl;
   }
 }

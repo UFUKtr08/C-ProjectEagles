@@ -1,26 +1,26 @@
-#ifndef SOUNDSENSOR_H
-#define SOUNDSENSOR_H
+#ifndef SOUND_SENSOR_H
+#define SOUND_SENSOR_H
 
 #include "Device.h"
-#include <iostream>
+#include <string>
+#include <vector>
 
+// SecuritySystem'i sadece ismen tanıyoruz (Forward Declaration)
 class SecuritySystem;
 
 class SoundSensor : public Device {
 public:
-  SoundSensor(int id, string n) : Device(id, n) {}
-  ~SoundSensor() {}
+  SoundSensor(int id, std::string n);
 
-  // EKSİK OLAN PARÇA BU:
-  void togglePower() {
-    isPowered = !isPowered;
-    cout << getName() << (isPowered ? " is now ON." : " is now OFF.") << endl;
-  }
+  // Override Metodlar
+  void togglePower() override;
+  Device *clone() const override;
+  std::string getType() const override;
+  std::vector<std::string> getActions() override;
+  void performAction(std::string actionName) override;
 
-  Device *clone() const { return new SoundSensor(*this); }
-
+  // Özel Metod
   void measureLevel(int db, SecuritySystem *sys);
-  string getType() const { return "SoundSensor"; }
 };
 
 #endif
