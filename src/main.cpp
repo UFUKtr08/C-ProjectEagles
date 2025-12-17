@@ -11,7 +11,7 @@
 #include "../include/ModeManager.h"
 #include "../include/Modes.h"
 #include "../include/SecuritySystem.h"
-
+#include "../include/IConfigurable.h"
 using namespace std;
 
 int main() {
